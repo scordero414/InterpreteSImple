@@ -5,11 +5,14 @@
  */
 package Control;
 
+import Elementos.Instruccion;
+import Elementos.Operacion;
 import IOElements.Lector;
 import IOElements.LectorArhivoTextoPlano;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,20 +20,59 @@ import java.util.HashMap;
  */
 public class Interprete {
     private Lector lector;
-
+    private ArrayList instrucciones;
+    private Instruccion instruccion;
+    private HashMap<String,Float> variables = new HashMap<>();
+    
     public Interprete() {
         lector = new LectorArhivoTextoPlano();
+        instruccion = new Instruccion();
     }
     
-    HashMap<String,Float> variables = new HashMap<>();
+    
     public static void main(String[] args) throws IOException{
         Interprete interprete = new Interprete();
         interprete.mostrarInstrucciones();
+        interprete.determinarInstruccion();
+        System.out.println(interprete.variables.get("a"));
+        System.out.println(interprete.variables.get("b"));
+        System.out.println(interprete.variables.get("r1"));
+        System.out.println(interprete.variables.get("r3"));
     }
     public void mostrarInstrucciones() throws IOException{
-        ArrayList arregloInstrucciones = lector.leerArchivo();
-        for (int i = 0; i < arregloInstrucciones.size(); i++) {
-            System.out.println(arregloInstrucciones.get(i));            
+        this.instrucciones = lector.leerArchivo();
+        for (int i = 0; i < this.instrucciones.size(); i++) {
+            System.out.println(this.instrucciones.get(i));
+            
+        }
+    }
+    
+    public void determinarInstruccion(){
+        for (int i = 0; i < this.instrucciones.size(); i++) {
+            String instruccionTemporal = this.instrucciones.get(i).toString();
+            if(instruccionTemporal.equals("")){
+                continue;
+            }
+            String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
+            if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
+                instruccion.asignar(arregloTemporalInstrucciones[0],Float.parseFloat(arregloTemporalInstrucciones[2]),variables);
+            }else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
+                for(int j = 0; j < arregloTemporalInstrucciones.length; j++) {
+                    if(variables.containsKey(arregloTemporalInstrucciones[j])) {
+                        arregloTemporalInstrucciones[j] =Float.toString(variables.get(arregloTemporalInstrucciones[j]));
+
+                    }
+                }
+                Operacion operacion = new Operacion(Float.parseFloat(arregloTemporalInstrucciones[2]),arregloTemporalInstrucciones[3].charAt(0),Float.parseFloat(arregloTemporalInstrucciones[4]));
+                float resultado = operacion.determinarOperacion();
+                instruccion.asignar(arregloTemporalInstrucciones[0],resultado,variables);
+            }else if(arregloTemporalInstrucciones[0].equals("mostrar")){
+                float resultado = instruccion.mostrar(arregloTemporalInstrucciones[1], variables);
+                JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+resultado);
+            }else if(arregloTemporalInstrucciones[0].equals("pedir")){
+                float resultado = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para "+arregloTemporalInstrucciones[1]+":"));
+                instruccion.asignar(arregloTemporalInstrucciones[1], resultado, variables);
+            }
         }
     }
 }

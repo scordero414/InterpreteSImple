@@ -10,39 +10,39 @@ package Elementos;
  * @author ASUS
  */
 public class Operacion {
-//    private float operando1;
-//    private char operador;
-//    private float operando2;
-//
-//    public Operacion(float operando1, char operador, float operando2) {
-//        this.operando1 = operando1;
-//        this.operador = operador;
-//        this.operando2 = operando2;
-//    }
-//
-//    public float getOperando1() {
-//        return operando1;
-//    }
-//
-//    public void setOperando1(float operando1) {
-//        this.operando1 = operando1;
-//    }
-//
-//    public char getOperador() {
-//        return operador;
-//    }
-//
-//    public void setOperador(char operador) {
-//        this.operador = operador;
-//    }
-//
-//    public float getOperando2() {
-//        return operando2;
-//    }
-//
-//    public void setOperando2(float operando2) {
-//        this.operando2 = operando2;
-//    }
+    private float operando1;
+    private char operador;
+    private float operando2;
+
+    public Operacion(float operando1, char operador, float operando2) {
+        this.operando1 = operando1;
+        this.operador = operador;
+        this.operando2 = operando2;
+    }
+
+    public float getOperando1() {
+        return operando1;
+    }
+
+    public void setOperando1(float operando1) {
+        this.operando1 = operando1;
+    }
+
+    public char getOperador() {
+        return operador;
+    }
+
+    public void setOperador(char operador) {
+        this.operador = operador;
+    }
+
+    public float getOperando2() {
+        return operando2;
+    }
+
+    public void setOperando2(float operando2) {
+        this.operando2 = operando2;
+    }
     
     private float sumar(float operando1, float operando2){
         return operando1 + operando2;
@@ -60,7 +60,7 @@ public class Operacion {
         return operando1 % operando2;
     }
     
-    public float determinarOperacion(float operando1, char operador, float operando2){
+    public float determinarOperacion(){
         float resultado = 0;
         switch(operador){
             case '+':
