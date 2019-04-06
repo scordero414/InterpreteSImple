@@ -5,10 +5,12 @@
  */
 package IOElements;
 
+import java.io.IOException;
+
 /**
  *
  * @author ASUS
  */
 public interface Escritor {
-    
+    public abstract void escribir(String archivoDestino, String variable, float valor) throws IOException;
 }

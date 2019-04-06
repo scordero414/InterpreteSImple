@@ -17,5 +17,3 @@ mostrar x
 
 guardar x
 leer x en y
-
-mostrar y

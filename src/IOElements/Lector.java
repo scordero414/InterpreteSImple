@@ -13,5 +13,5 @@ import java.util.ArrayList;
  * @author ASUS
  */
 public interface Lector {
-    public abstract ArrayList leerArchivo() throws IOException;
+    public abstract ArrayList leerArchivo(String archivo) throws IOException;
 }

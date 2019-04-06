@@ -16,13 +16,14 @@ import javax.annotation.processing.FilerException;
  */
 public class LectorArhivoTextoPlano implements Lector{
     @Override
-    public ArrayList leerArchivo() throws IOException {
-        RandomAccessFile lector = new RandomAccessFile("instrucciones.txt", "r");
+    public ArrayList leerArchivo(String archivo) throws IOException {
+        RandomAccessFile lector = new RandomAccessFile(archivo, "r");
         ArrayList<String> instrucciones = new ArrayList<>();
         String linea = null;
         while((linea = lector.readLine()) != null){
             instrucciones.add(linea);
         }
+        lector.close();
         return instrucciones;
     }
     
