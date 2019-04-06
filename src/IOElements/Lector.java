@@ -5,10 +5,13 @@
  */
 package IOElements;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  *
  * @author ASUS
  */
 public interface Lector {
-    
+    public abstract ArrayList leerArchivo() throws IOException;
 }

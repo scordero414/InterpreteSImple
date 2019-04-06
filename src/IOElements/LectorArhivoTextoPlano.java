@@ -5,10 +5,25 @@
  */
 package IOElements;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import javax.annotation.processing.FilerException;
+
 /**
  *
  * @author ASUS
  */
-public class LectorArhivoTextoPlano {
+public class LectorArhivoTextoPlano implements Lector{
+    @Override
+    public ArrayList leerArchivo() throws IOException {
+        RandomAccessFile lector = new RandomAccessFile("instrucciones.txt", "r");
+        ArrayList<String> instrucciones = new ArrayList<>();
+        String linea = null;
+        while((linea = lector.readLine()) != null){
+            instrucciones.add(linea);
+        }
+        return instrucciones;
+    }
     
 }
