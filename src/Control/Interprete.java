@@ -59,7 +59,7 @@ public class Interprete {
         determinarInstruccion();
     }
     
-    public void determinarInstruccion() throws IOException, NullPointerException, InstruccionIncorrectaException, ValorIncorrectoException, VariableGuardadaException{
+    public void determinarInstruccion() throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException{
         ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
         for (int i = 0; i < instrucciones.size(); i++) {
             String instruccionTemporal = instrucciones.get(i).toString();

@@ -32,30 +32,26 @@ public class Instruccion {
         variables.put(variable2, valor);        
     }
     
-    public void pedir(String variable, HashMap variables) {
-        try {
-            float resultadoPedir = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para " + variable + ":").trim());                
-            asignar(variable, resultadoPedir, variables);
-        } catch(NumberFormatException nf) {
-            JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
-            pedir(variable, variables);
-        }
+    public void pedir(String variable, HashMap variables) throws NumberFormatException {
+        float resultadoPedir = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para " + variable + ":").trim());                
+        asignar(variable, resultadoPedir, variables);
     }
     
-    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables) throws NullPointerException, InstruccionIncorrectaException, ValorIncorrectoException, VariableGuardadaException{
+    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables) throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
         switch(opcion){
             case "mostrar":
                 try {
                     float resultado = mostrar(arregloTemporalInstrucciones[1], variables);
                     JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+resultado);
                 } catch (NullPointerException np) {
-                    JOptionPane.showMessageDialog(null, "La variable " + arregloTemporalInstrucciones[1] +" no existe.");
+                    throw new NullPointerException("La variable " + arregloTemporalInstrucciones[1] + " no existe.");
                 }
                     
             break;
 
             case "pedir":
-                pedir(arregloTemporalInstrucciones[1], variables);
+                float resultadoPedir = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para " + arregloTemporalInstrucciones[1] + ":").trim());                
+                asignar(arregloTemporalInstrucciones[1], resultadoPedir, variables); 
             break;
 
             case "guardar":
@@ -65,8 +61,7 @@ public class Instruccion {
                 leerEn(arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
             break;
             default:
-                JOptionPane.showMessageDialog(null, "La instruccion " + opcion + " no existe.");
-            break;
+                throw new InstruccionIncorrectaException("La instrucción " + opcion + " no es correcta.");
         }
     }
     

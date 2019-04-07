@@ -7,6 +7,7 @@ package Vistas;
 
 import Control.Interprete;
 import Elementos.Instruccion;
+import Excepciones.InstruccionIncorrectaException;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -135,6 +136,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
             interprete.determinarOpcionesVista(estado);
         } catch (IOException ex) {
             System.out.println(ex);
+        } catch (InstruccionIncorrectaException ie) {
+            JOptionPane.showMessageDialog(null, ie.getMessage());
+        } catch (NullPointerException npe) {
+            JOptionPane.showMessageDialog(null, npe.getMessage());
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
+//            instruccion.pedir(variable, variables);
         }
     }//GEN-LAST:event_bIniciarActionPerformed
 
