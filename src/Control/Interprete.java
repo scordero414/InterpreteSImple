@@ -7,6 +7,7 @@ package Control;
 
 import Elementos.Instruccion;
 import Elementos.Operacion;
+import Excepciones.ArchivoVacioException;
 import Excepciones.InstruccionIncorrectaException;
 import Excepciones.ValorIncorrectoException;
 import Excepciones.VariableGuardadaException;
@@ -15,6 +16,8 @@ import IOElements.EscritorArchivoTextoPlano;
 import IOElements.Lector;
 import IOElements.LectorArhivoTextoPlano;
 import Vistas.VistaPrincipal;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,15 +55,36 @@ public class Interprete {
             case 1:
                 iniciarInterprete();
             break;
+            case 2:
+                abrirTxt(archivoInstrucciones);
+            break;
+            case 3:
+                System.exit(0);
+            break;
         }
     }
     
+    /**
+     * Se abre un archivo de texto.
+     * @param archivo 
+     */
+    public void abrirTxt(String archivo){
+        try {
+            File objectTxt = new File(archivo);
+            Desktop.getDesktop().open(objectTxt);
+        }catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
     public void iniciarInterprete() throws IOException{
         determinarInstruccion();
     }
     
     public void determinarInstruccion() throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException{
         ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
+        if(instrucciones.isEmpty()) {
+            throw new ArchivoVacioException();
+        }
         for (int i = 0; i < instrucciones.size(); i++) {
             String instruccionTemporal = instrucciones.get(i).toString();
             if(instruccionTemporal.equals("")){

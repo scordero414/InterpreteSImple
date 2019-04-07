@@ -33,8 +33,13 @@ public class Instruccion {
     }
     
     public void pedir(String variable, HashMap variables) throws NumberFormatException {
-        float resultadoPedir = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para " + variable + ":").trim());                
-        asignar(variable, resultadoPedir, variables);
+        try {
+            float resultadoPedir = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para " + variable + ":").trim());                
+            asignar(variable, resultadoPedir, variables);
+        } catch (NumberFormatException nfe) {
+            throw new NumberFormatException();
+        }
+        
     }
     
     public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables) throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
@@ -44,14 +49,18 @@ public class Instruccion {
                     float resultado = mostrar(arregloTemporalInstrucciones[1], variables);
                     JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+resultado);
                 } catch (NullPointerException np) {
-                    throw new NullPointerException("La variable " + arregloTemporalInstrucciones[1] + " no existe.");
+                    throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe.");
                 }
                     
             break;
 
             case "pedir":
-                float resultadoPedir = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para " + arregloTemporalInstrucciones[1] + ":").trim());                
-                asignar(arregloTemporalInstrucciones[1], resultadoPedir, variables); 
+                try {
+                    pedir(arregloTemporalInstrucciones[1], variables);
+                } catch (NumberFormatException nfe) {
+                    pedir(arregloTemporalInstrucciones[1], variables);
+                }
+                
             break;
 
             case "guardar":
@@ -61,7 +70,7 @@ public class Instruccion {
                 leerEn(arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
             break;
             default:
-                throw new InstruccionIncorrectaException("La instrucción " + opcion + " no es correcta.");
+                throw new InstruccionIncorrectaException("La instrucción '" + opcion + "' no es correcta.");
         }
     }
     

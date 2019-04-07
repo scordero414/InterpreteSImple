@@ -7,6 +7,7 @@ package Vistas;
 
 import Control.Interprete;
 import Elementos.Instruccion;
+import Excepciones.ArchivoVacioException;
 import Excepciones.InstruccionIncorrectaException;
 import java.awt.Desktop;
 import java.io.File;
@@ -136,6 +137,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
             interprete.determinarOpcionesVista(estado);
         } catch (IOException ex) {
             System.out.println(ex);
+        } catch (ArchivoVacioException ave) {
+            JOptionPane.showMessageDialog(null, "El archivo de texto esta vacío!");
         } catch (InstruccionIncorrectaException ie) {
             JOptionPane.showMessageDialog(null, ie.getMessage());
         } catch (NullPointerException npe) {
@@ -147,12 +150,21 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_bIniciarActionPerformed
 
     private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
-        System.exit(0);
+        estado = 3;
+        try {
+            interprete.determinarOpcionesVista(estado);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());;
+        }
     }//GEN-LAST:event_bSalirActionPerformed
 
     private void bEditarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarArchivoActionPerformed
-        String archivo = "instrucciones.txt";
-        abrirTxt(archivo);
+        estado = 2;
+        try {
+            interprete.determinarOpcionesVista(estado);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());;
+        }
     }//GEN-LAST:event_bEditarArchivoActionPerformed
    
     /**
