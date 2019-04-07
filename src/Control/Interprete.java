@@ -23,7 +23,6 @@ import javax.swing.JOptionPane;
 public class Interprete {
     private Lector lector;
     private Escritor escritor;
-    private ArrayList instrucciones;
     private Instruccion instruccion;
     private HashMap<String,Float> variables = new HashMap<>();
     private static String archivoInstrucciones = "instrucciones.txt";
@@ -37,23 +36,18 @@ public class Interprete {
     
     public static void main(String[] args) throws IOException{
         Interprete interprete = new Interprete();
-        interprete.mostrarInstrucciones();
         interprete.determinarInstruccion();
 //        System.out.println(interprete.variables.get("a"));
 //        System.out.println(interprete.variables.get("b"));
 //        System.out.println(interprete.variables.get("r1"));
 //        System.out.println(interprete.variables.get("r3"));
     }
-    public void mostrarInstrucciones() throws IOException{
-        this.instrucciones = lector.leerArchivo(archivoInstrucciones);
-        for (int i = 0; i < this.instrucciones.size(); i++) {
-            System.out.println(this.instrucciones.get(i));
-        }
-    }
+    
     
     public void determinarInstruccion() throws IOException{
-        for (int i = 0; i < this.instrucciones.size(); i++) {
-            String instruccionTemporal = this.instrucciones.get(i).toString();
+        ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
+        for (int i = 0; i < instrucciones.size(); i++) {
+            String instruccionTemporal = instrucciones.get(i).toString();
             if(instruccionTemporal.equals("")){
                 continue;
             }
@@ -101,7 +95,7 @@ public class Interprete {
             break;
 
             case "leer":
-                instruccion.leerEn(arregloTemporalInstrucciones[1],arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
+                instruccion.leerEn(arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
             break;
         }
     }
