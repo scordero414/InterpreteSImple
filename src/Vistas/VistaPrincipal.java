@@ -6,11 +6,13 @@
 package Vistas;
 
 import Control.Interprete;
+import Elementos.Instruccion;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,6 +25,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
      */
     private int estado;
     private Interprete interprete;
+    private Instruccion instruccion;
+    
     public int getEstado() {
         return estado;
     }
@@ -77,7 +81,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 204, 255));
-        jLabel1.setText("Interprete SImple");
+        jLabel1.setText("Interprete Simple");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Captura.JPG"))); // NOI18N
 
@@ -130,7 +134,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         try {
             interprete.determinarOpcionesVista(estado);
         } catch (IOException ex) {
-            Logger.getLogger(VistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
     }//GEN-LAST:event_bIniciarActionPerformed
 
@@ -142,7 +146,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         String archivo = "instrucciones.txt";
         abrirTxt(archivo);
     }//GEN-LAST:event_bEditarArchivoActionPerformed
-
+   
     /**
      * Se abre un archivo de texto.
      * @param archivo 

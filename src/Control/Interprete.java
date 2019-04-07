@@ -7,6 +7,9 @@ package Control;
 
 import Elementos.Instruccion;
 import Elementos.Operacion;
+import Excepciones.InstruccionIncorrectaException;
+import Excepciones.ValorIncorrectoException;
+import Excepciones.VariableGuardadaException;
 import IOElements.Escritor;
 import IOElements.EscritorArchivoTextoPlano;
 import IOElements.Lector;
@@ -49,9 +52,6 @@ public class Interprete {
             case 1:
                 iniciarInterprete();
             break;
-            case 2:
-                
-            break;
         }
     }
     
@@ -59,7 +59,7 @@ public class Interprete {
         determinarInstruccion();
     }
     
-    public void determinarInstruccion() throws IOException{
+    public void determinarInstruccion() throws IOException, NullPointerException, InstruccionIncorrectaException, ValorIncorrectoException, VariableGuardadaException{
         ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
         for (int i = 0; i < instrucciones.size(); i++) {
             String instruccionTemporal = instrucciones.get(i).toString();
