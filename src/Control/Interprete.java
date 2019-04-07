@@ -11,6 +11,7 @@ import IOElements.Escritor;
 import IOElements.EscritorArchivoTextoPlano;
 import IOElements.Lector;
 import IOElements.LectorArhivoTextoPlano;
+import Vistas.VistaPrincipal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,18 +28,36 @@ public class Interprete {
     private HashMap<String,Float> variables = new HashMap<>();
     private static String archivoInstrucciones = "instrucciones.txt";
     private static String archivoDatos = "archivoDestino.txt";
-    public Interprete() {
+    
+    
+    public Interprete() throws IOException {
         lector = new LectorArhivoTextoPlano();
         escritor = new EscritorArchivoTextoPlano();
         instruccion = new Instruccion();
+        
     }
-    
-    
+        
     public static void main(String[] args) throws IOException{
         Interprete interprete = new Interprete();
-        interprete.determinarInstruccion();
+        VistaPrincipal vistaPrincipal = new VistaPrincipal(interprete);        
+        vistaPrincipal.setResizable(false);
+        
     }
     
+    public void determinarOpcionesVista(int opcion) throws IOException{
+        switch(opcion){
+            case 1:
+                iniciarInterprete();
+            break;
+            case 2:
+                
+            break;
+        }
+    }
+    
+    public void iniciarInterprete() throws IOException{
+        determinarInstruccion();
+    }
     
     public void determinarInstruccion() throws IOException{
         ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
@@ -51,48 +70,11 @@ public class Interprete {
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
                 instruccion.asignar(arregloTemporalInstrucciones[0],Float.parseFloat(arregloTemporalInstrucciones[2]),variables);
             }else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
-                determinarAsignacionCompuesta(arregloTemporalInstrucciones);
+                instruccion.determinarAsignacionCompuesta(arregloTemporalInstrucciones,variables);
             }else{
                 String opcion = arregloTemporalInstrucciones[0];
-                determinarInstruccionSimple(opcion, arregloTemporalInstrucciones);
+                instruccion.determinarInstruccionSimple(opcion, arregloTemporalInstrucciones,variables);
             }
         }
-    }
-    
-    public void determinarAsignacionCompuesta(String [] arregloTemporalInstrucciones){
-        for(int j = 0; j < arregloTemporalInstrucciones.length; j++) {
-            if(variables.containsKey(arregloTemporalInstrucciones[j])) {
-                arregloTemporalInstrucciones[j] =Float.toString(variables.get(arregloTemporalInstrucciones[j]));
-
-            }
-        }
-        Operacion operacion = new Operacion(Float.parseFloat(arregloTemporalInstrucciones[2]),arregloTemporalInstrucciones[3].charAt(0),Float.parseFloat(arregloTemporalInstrucciones[4]));
-        float resultado = operacion.determinarOperacion();
-        instruccion.asignar(arregloTemporalInstrucciones[0],resultado,variables);
-    }
-    
-    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones){
-        switch(opcion){
-            case "mostrar":
-                try{
-                    float resultado = instruccion.mostrar(arregloTemporalInstrucciones[1], variables);
-                    JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+resultado);
-                }catch(NullPointerException np){
-                    System.out.println("Errorsito!!!");
-                }
-            break;
-
-            case "pedir":
-                float resultado = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para "+arregloTemporalInstrucciones[1]+":").trim());                
-                instruccion.asignar(arregloTemporalInstrucciones[1], resultado, variables);
-            break;
-
-            case "guardar":
-            break;
-
-            case "leer":
-                instruccion.leerEn(arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
-            break;
-        }
-    }
+    }    
 }

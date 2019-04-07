@@ -6,6 +6,7 @@
 package Elementos;
 
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,5 +29,41 @@ public class Instruccion {
         variables.put(variable2, valor);        
     }
     
+    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables){
+        switch(opcion){
+            case "mostrar":
+                try{
+                    float resultado = mostrar(arregloTemporalInstrucciones[1], variables);
+                    JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+resultado);
+                }catch(NullPointerException np){
+                    System.out.println("Errorsito!!!");
+                }
+            break;
+
+            case "pedir":
+                float resultado = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para "+arregloTemporalInstrucciones[1]+":").trim());                
+                asignar(arregloTemporalInstrucciones[1], resultado, variables);
+            break;
+
+            case "guardar":
+            break;
+
+            case "leer":
+                leerEn(arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
+            break;
+        }
+    }
+    
+    public void determinarAsignacionCompuesta(String [] arregloTemporalInstrucciones,HashMap variables){
+        for(int j = 0; j < arregloTemporalInstrucciones.length; j++) {
+            if(variables.containsKey(arregloTemporalInstrucciones[j])) {
+                arregloTemporalInstrucciones[j] = Float.toString((float) variables.get(arregloTemporalInstrucciones[j]));
+
+            }
+        }
+        Operacion operacion = new Operacion(Float.parseFloat(arregloTemporalInstrucciones[2]),arregloTemporalInstrucciones[3].charAt(0),Float.parseFloat(arregloTemporalInstrucciones[4]));
+        float resultado = operacion.determinarOperacion();
+        asignar(arregloTemporalInstrucciones[0],resultado,variables);
+    }
     
 }
