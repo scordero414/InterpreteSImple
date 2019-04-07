@@ -5,15 +5,21 @@ b = 100
 r1 = 1 + b
 r2 = a - 10
 r3 = a * b
-r4 = a / 10
+r4 = a / 10 
+r5 = a % b
 
 mostrar r1
 mostrar r2
 mostrar r3
 mostrar r4
+mostrar r5
 
 pedir x
 mostrar x
 
 guardar x
+guardar r1
+
 leer x en y
+
+mostrar y
