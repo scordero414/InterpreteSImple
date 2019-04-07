@@ -17,7 +17,9 @@ public class EscritorArchivoTextoPlano implements Escritor{
     @Override
     public void escribir(String archivoDestino , String variable, float valor) throws IOException {
         RandomAccessFile escritor = new RandomAccessFile(archivoDestino, "rw");
-        escritor.writeChars(variable + " = "+valor);
+        
+        escritor.writeChars(variable + " = "+valor+"\n");
+        
         escritor.close();
     }
     
