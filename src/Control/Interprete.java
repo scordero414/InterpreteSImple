@@ -37,10 +37,6 @@ public class Interprete {
     public static void main(String[] args) throws IOException{
         Interprete interprete = new Interprete();
         interprete.determinarInstruccion();
-//        System.out.println(interprete.variables.get("a"));
-//        System.out.println(interprete.variables.get("b"));
-//        System.out.println(interprete.variables.get("r1"));
-//        System.out.println(interprete.variables.get("r3"));
     }
     
     
