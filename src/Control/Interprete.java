@@ -101,8 +101,7 @@ public class Interprete {
             break;
 
             case "leer":
-                instruccion.asignar(arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables.get(arregloTemporalInstrucciones[1]),
-                                                                                                                                            variables);
+                instruccion.leerEn(arregloTemporalInstrucciones[1],arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
             break;
         }
     }

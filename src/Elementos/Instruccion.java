@@ -18,16 +18,9 @@ public class Instruccion {
     public void asignar(String variable, float valor,HashMap variables){
         variables.put(variable, valor);
     }
-//    public float operar(float operando1 , char operador, float operando2){
-//        return operacion.determinarOperacion(operando1,operador,operando2);
-//    }
     
     public float mostrar(String variable,HashMap variables){
         return (float) variables.get(variable);
-    }
-    
-    public void  guardarVariableTemporalPedida(String variable, HashMap variables , float valorPedido){
-        variables.put(variable, valorPedido);
     }
     
     public void leerEn(String variable1,String variable2, HashMap variables){
