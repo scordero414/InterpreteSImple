@@ -16,6 +16,8 @@ import java.io.IOException;
  */
 public class VistaPrincipal extends javax.swing.JFrame {
     
+    Interprete interprete;
+    
     /**
      * Estado de la vista, conociendo los botones accionados.
      */
@@ -31,7 +33,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     public VistaPrincipal() {
         initComponents();
         setLocationRelativeTo(this);
-        setVisible(true);
     }
 
     /**
