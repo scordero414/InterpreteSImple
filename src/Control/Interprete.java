@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import jdk.nashorn.internal.objects.NativeArray;
 
 /**
  *
@@ -60,6 +61,9 @@ public class Interprete {
             case 3:
                 System.exit(0);
             break;
+            case 4:
+                abrirTxt(archivoDatos);
+            break;
         }
     }
     
@@ -77,7 +81,12 @@ public class Interprete {
     }
     public void iniciarInterprete() throws IOException{
         analizador.iniciar(lector,archivoInstrucciones);
+        escribirVariablesGuardadas();
     }
     
+    public void escribirVariablesGuardadas() throws IOException{
+        escritor.escribir(archivoDatos, analizador.getVariablesGuardadas());
+        analizador.getVariablesGuardadas().clear();
+    }
     
 }

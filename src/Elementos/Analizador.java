@@ -23,6 +23,7 @@ public class Analizador {
     
     private Asignacion asignacion;
     private HashMap<String,Float> variables = new HashMap<>();
+    private ArrayList<String> variablesGuardadas = new ArrayList<>();
     
 
     public float mostrar(String variable,HashMap variables){
@@ -67,6 +68,7 @@ public class Analizador {
             break;
 
             case "guardar":
+                variablesGuardadas.add(guardar(arregloTemporalInstrucciones[1], variables));                
             break;
 
             case "leer":
@@ -104,6 +106,15 @@ public class Analizador {
 
     public void iniciar(Lector lector, String archivoInstrucciones) throws IOException {
         determinarInstruccion(lector, archivoInstrucciones);
+    }
+    
+    public String guardar(String variable,HashMap variables){
+        String linea = ""+variable+" = "+variables.get(variable);
+        return linea;
+    }
+
+    public ArrayList<String> getVariablesGuardadas() {
+        return variablesGuardadas;
     }
     
     

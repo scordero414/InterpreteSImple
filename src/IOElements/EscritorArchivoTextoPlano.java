@@ -7,6 +7,7 @@ package IOElements;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,11 +16,11 @@ import java.io.RandomAccessFile;
 public class EscritorArchivoTextoPlano implements Escritor{
 
     @Override
-    public void escribir(String archivoDestino , String variable, float valor) throws IOException {
+    public void escribir(String archivoDestino , ArrayList variablesGuardadas) throws IOException {
         RandomAccessFile escritor = new RandomAccessFile(archivoDestino, "rw");
-        
-        escritor.writeChars(variable + " = "+valor+"\n");
-        
+        for(int i=0 ; i<variablesGuardadas.size() ; i++){
+            escritor.writeChars((String) variablesGuardadas.get(i)+"\n");
+        }
         escritor.close();
     }
     

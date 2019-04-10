@@ -6,11 +6,12 @@
 package IOElements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
  * @author ASUS
  */
 public interface Escritor {
-    public abstract void escribir(String archivoDestino, String variable, float valor) throws IOException;
+    public abstract void escribir(String archivoDestino, ArrayList variablesGuardadas) throws IOException;
 }

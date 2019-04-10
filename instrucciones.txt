@@ -1,5 +1,5 @@
-a = 100
 
+a = 200
 b = 100
 
 r1 = a + b
@@ -19,11 +19,8 @@ leer r1 en r5
 pedir x
 mostrar x
 
-mostrar r5
-
 guardar x
 
-leer x en y
+mostrar r5
 
-mostrar y
-mostrar r6
+leer x en y

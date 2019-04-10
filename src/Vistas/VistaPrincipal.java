@@ -56,6 +56,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         bEditarArchivo = new javax.swing.JButton();
         bSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,6 +86,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(51, 204, 255));
         jLabel1.setText("Interprete Simple");
 
+        jButton2.setText("Ver Variables Guardadas");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Captura.JPG"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -94,14 +102,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(176, 176, 176)
-                        .addComponent(bIniciar))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(151, 151, 151)
                         .addComponent(bEditarArchivo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addComponent(bIniciar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(350, 350, 350)
                         .addComponent(bSalir)))
@@ -113,14 +124,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(107, 107, 107)
+                        .addComponent(bEditarArchivo))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(142, 142, 142)
                         .addComponent(bIniciar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(185, 185, 185)
-                        .addComponent(bEditarArchivo))
+                        .addGap(250, 250, 250)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(250, 250, 250)
                         .addComponent(bSalir)))
@@ -166,12 +179,22 @@ public class VistaPrincipal extends javax.swing.JFrame {
             System.out.println(ex.getMessage());;
         }
     }//GEN-LAST:event_bEditarArchivoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        estado = 4;
+        try {
+            interprete.determinarOpcionesVista(estado);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());;
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bEditarArchivo;
     private javax.swing.JButton bIniciar;
     private javax.swing.JButton bSalir;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
