@@ -5,9 +5,13 @@
  */
 package Elementos;
 
+import Excepciones.ArchivoVacioException;
 import Excepciones.InstruccionIncorrectaException;
 import Excepciones.ValorIncorrectoException;
 import Excepciones.VariableGuardadaException;
+import IOElements.Lector;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -15,14 +19,12 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS
  */
-public class Instruccion {
+public class Analizador {
     
-    private Operacion operacion;
+    private Asignacion asignacion;
+    private HashMap<String,Float> variables = new HashMap<>();
     
-    public void asignar(String variable, float valor,HashMap variables){
-        variables.put(variable, valor);
-    }
-    
+
     public float mostrar(String variable,HashMap variables){
         return (float) variables.get(variable);
     }
@@ -35,7 +37,8 @@ public class Instruccion {
     public void pedir(String variable, HashMap variables) throws NumberFormatException {
         try {
             float resultadoPedir = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para " + variable + ":").trim());                
-            asignar(variable, resultadoPedir, variables);
+            asignacion = new AsignacionSimple(variable, resultadoPedir);
+            asignacion.asignar(variables);
         } catch (NumberFormatException nfe) {
             throw new NumberFormatException();
         }
@@ -74,16 +77,34 @@ public class Instruccion {
         }
     }
     
-    public void determinarAsignacionCompuesta(String [] arregloTemporalInstrucciones,HashMap variables){
-        for(int j = 0; j < arregloTemporalInstrucciones.length; j++) {
-            if(variables.containsKey(arregloTemporalInstrucciones[j])) {
-                arregloTemporalInstrucciones[j] = Float.toString((float) variables.get(arregloTemporalInstrucciones[j]));
-
+    
+    public void determinarInstruccion(Lector lector,String archivoInstrucciones) throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException{
+        ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
+        if(instrucciones.isEmpty()) {
+            throw new ArchivoVacioException();
+        }
+        for (int i = 0; i < instrucciones.size(); i++) {
+            String instruccionTemporal = instrucciones.get(i).toString();
+            if(instruccionTemporal.equals("")){
+                continue;
+            }
+            String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
+            if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
+                asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Float.parseFloat(arregloTemporalInstrucciones[2]));
+                asignacion.asignar(variables);
+            }else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
+                asignacion = new AsignacionCompuesta();
+                asignacion.asignar(arregloTemporalInstrucciones, variables);
+            }else{
+                String opcion = arregloTemporalInstrucciones[0];
+                determinarInstruccionSimple(opcion, arregloTemporalInstrucciones,variables);
             }
         }
-        Operacion operacion = new Operacion(Float.parseFloat(arregloTemporalInstrucciones[2]),arregloTemporalInstrucciones[3].charAt(0),Float.parseFloat(arregloTemporalInstrucciones[4]));
-        float resultado = operacion.determinarOperacion();
-        asignar(arregloTemporalInstrucciones[0],resultado,variables);
+    }    
+
+    public void iniciar(Lector lector, String archivoInstrucciones) throws IOException {
+        determinarInstruccion(lector, archivoInstrucciones);
     }
+    
     
 }

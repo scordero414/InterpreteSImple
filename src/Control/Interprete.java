@@ -5,7 +5,7 @@
  */
 package Control;
 
-import Elementos.Instruccion;
+import Elementos.Analizador;
 import Elementos.Operacion;
 import Excepciones.ArchivoVacioException;
 import Excepciones.InstruccionIncorrectaException;
@@ -30,8 +30,8 @@ import javax.swing.JOptionPane;
 public class Interprete {
     private Lector lector;
     private Escritor escritor;
-    private Instruccion instruccion;
-    private HashMap<String,Float> variables = new HashMap<>();
+    private Analizador analizador;
+    
     private static String archivoInstrucciones = "instrucciones.txt";
     private static String archivoDatos = "archivoDestino.txt";
     
@@ -39,15 +39,14 @@ public class Interprete {
     public Interprete() throws IOException {
         lector = new LectorArhivoTextoPlano();
         escritor = new EscritorArchivoTextoPlano();
-        instruccion = new Instruccion();
+        analizador = new Analizador();
         
     }
         
     public static void main(String[] args) throws IOException{
         Interprete interprete = new Interprete();
         VistaPrincipal vistaPrincipal = new VistaPrincipal(interprete);        
-        vistaPrincipal.setResizable(false);
-        
+        vistaPrincipal.setResizable(false);        
     }
     
     public void determinarOpcionesVista(int opcion) throws IOException{
@@ -77,28 +76,8 @@ public class Interprete {
         }
     }
     public void iniciarInterprete() throws IOException{
-        determinarInstruccion();
+        analizador.iniciar(lector,archivoInstrucciones);
     }
     
-    public void determinarInstruccion() throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException{
-        ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
-        if(instrucciones.isEmpty()) {
-            throw new ArchivoVacioException();
-        }
-        for (int i = 0; i < instrucciones.size(); i++) {
-            String instruccionTemporal = instrucciones.get(i).toString();
-            if(instruccionTemporal.equals("")){
-                continue;
-            }
-            String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
-            if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
-                instruccion.asignar(arregloTemporalInstrucciones[0],Float.parseFloat(arregloTemporalInstrucciones[2]),variables);
-            }else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
-                instruccion.determinarAsignacionCompuesta(arregloTemporalInstrucciones,variables);
-            }else{
-                String opcion = arregloTemporalInstrucciones[0];
-                instruccion.determinarInstruccionSimple(opcion, arregloTemporalInstrucciones,variables);
-            }
-        }
-    }    
+    
 }

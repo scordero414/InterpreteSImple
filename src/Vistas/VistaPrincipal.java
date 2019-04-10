@@ -6,7 +6,7 @@
 package Vistas;
 
 import Control.Interprete;
-import Elementos.Instruccion;
+import Elementos.Analizador;
 import Excepciones.ArchivoVacioException;
 import Excepciones.InstruccionIncorrectaException;
 import java.awt.Desktop;
@@ -27,7 +27,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
      */
     private int estado;
     private Interprete interprete;
-    private Instruccion instruccion;
+    private Analizador instruccion;
     
     public int getEstado() {
         return estado;
@@ -166,19 +166,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             System.out.println(ex.getMessage());;
         }
     }//GEN-LAST:event_bEditarArchivoActionPerformed
-   
-    /**
-     * Se abre un archivo de texto.
-     * @param archivo 
-     */
-    public void abrirTxt(String archivo){
-        try {
-            File objectTxt = new File(archivo);
-            Desktop.getDesktop().open(objectTxt);
-        }catch (IOException ex) {
-            System.out.println(ex);
-        }
-    }
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bEditarArchivo;
