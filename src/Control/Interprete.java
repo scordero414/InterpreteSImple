@@ -25,8 +25,12 @@ import javax.swing.JOptionPane;
 import jdk.nashorn.internal.objects.NativeArray;
 
 /**
- *
- * @author ASUS
+ * Clase control, donde se crea la interpretación de los archivos de texto y
+ * se define la acción de vistas y demás clases.
+ * @author Daniel Gutiérrez 
+ * @author Sebastián Cordero
+ * @version 20190406
+ * @since 1.0
  */
 public class Interprete {
     private Lector lector;

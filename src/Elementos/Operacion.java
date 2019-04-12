@@ -6,8 +6,11 @@
 package Elementos;
 
 /**
- *
- * @author ASUS
+ * Interface para métodos y atributos para las operaciones.
+ * @author Daniel Gutierrez
+ * @author Sebastián Cordero
+ * @version 20190408
+ * @since 1.0
  */
 public abstract class Operacion {
     private float operando1;

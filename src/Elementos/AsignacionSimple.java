@@ -8,8 +8,11 @@ package Elementos;
 import java.util.HashMap;
 
 /**
- *
- * @author ASUS
+ * Se le asigna un valor a una variable.
+ * @author Daniel Gutierrez
+ * @author Sebastián Cordero
+ * @version 20190406
+ * @since 1.0
  */
 public class AsignacionSimple extends Asignacion{
     

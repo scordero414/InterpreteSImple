@@ -6,8 +6,11 @@
 package Excepciones;
 
 /**
- *
- * @author dgutierrezd
+ * Excepción para definir que el valor asignado ala variable no es válido.
+ * @author Daniel Gutierrez
+ * @author Sebastián Cordero
+ * @version 20190407
+ * @since 1.0
  */
 public class ValorIncorrectoException extends RuntimeException {
     

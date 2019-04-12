@@ -8,8 +8,11 @@ package Elementos;
 import java.util.HashMap;
 
 /**
- *
- * @author ASUS
+ * Se crean las asignaciones compuestas, a una variable se le designa una operación.
+ * @author Daniel Gutierrez
+ * @author Sebastián Cordero
+ * @version 20190406
+ * @since 1.0
  */
 public class AsignacionCompuesta extends Asignacion{
     private Operacion operacion;

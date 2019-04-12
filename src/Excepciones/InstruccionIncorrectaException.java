@@ -6,8 +6,11 @@
 package Excepciones;
 
 /**
- *
- * @author dgutierrezd
+ * Excepción para definir que la instrucción ingresada no es válida.
+ * @author Daniel Gutierrez
+ * @author Sebastián Cordero
+ * @version 20190407
+ * @since 1.0
  */
 public class InstruccionIncorrectaException extends RuntimeException {
     

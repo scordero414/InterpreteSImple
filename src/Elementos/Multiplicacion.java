@@ -6,8 +6,11 @@
 package Elementos;
 
 /**
- *
- * @author ASUS
+ * Se define la operación (Multiplicación) a dos operandos.
+ * @author Daniel Gutierrez
+ * @author Sebastián Cordero
+ * @version 20190408
+ * @since 1.0
  */
 public class Multiplicacion extends Operacion{
 

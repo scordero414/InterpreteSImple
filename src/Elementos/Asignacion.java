@@ -8,8 +8,11 @@ package Elementos;
 import java.util.HashMap;
 
 /**
- *
- * @author ASUS
+ * Se determinan las asignaciones a una variable, ya sea asginaciín simple o compuesta.
+ * @author Daniel Gutierrez
+ * @author Sebastián Cordero
+ * @version 20190406
+ * @since 1.0
  */
 public abstract class Asignacion {
     private String variable;

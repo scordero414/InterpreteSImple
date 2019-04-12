@@ -16,8 +16,11 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author ASUS
+ * Se conocen las instrucciones y se determinan sus funciones.
+ * @author Daniel Gutierrez
+ * @author Sebastián Cordero
+ * @version 20190406
+ * @since 1.0
  */
 public class Analizador {
     
