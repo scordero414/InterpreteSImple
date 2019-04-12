@@ -1,27 +1,20 @@
+a = 100
 
-a = 200
-b = 100
-
-r1 = a + b
+r1 = a + 10
 r2 = a - 10
-r3 = a * b
-r4 = a / 10 
-r5 = a % b
-r6 = a * 2
+r3 = a * 10
+r4 = a / 10
 
 mostrar r1
 mostrar r2
 mostrar r3
 mostrar r4
-mostrar r5
 
-leer r1 en r5
 pedir x
 mostrar x
+
 guardar x
-guardar a
-
-mostrar r5
-
 leer x en y
+
 mostrar y
+.

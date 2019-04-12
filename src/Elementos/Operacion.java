@@ -42,42 +42,5 @@ public abstract class Operacion {
      * @return 
      */
     public abstract float operar();
-    
-//    private float operar(float operando1, float operando2){
-//        return operando1 - operando2;
-//    }
-//    private float operar(float operando1, float operando2){
-//        return operando1 * operando2;
-//    }
-//    private float operar(float operando1, float operando2){
-//        
-//    }
-//    private float operar(float operando1, float operando2){
-//        return operando1 % operando2;
-//    }
-//    
-//    public float determinarOperacion(){
-//        float resultado = 0;
-//        switch(operador){
-//            case '+':
-//                resultado = sumar(operando1, operando2);
-//            break;
-//            case '-':
-//                resultado = restar(operando1, operando2);
-//            break;
-//            case '*':
-//                resultado = multiplicar(operando1, operando2);
-//            break;
-//            case '/':
-//                resultado = dividir(operando1, operando2);
-//            break;
-//            case '%':
-//                resultado = modular(operando1, operando2);
-//            break;
-//            default:
-//                System.out.println("Hay un problema, el caracter no esta entrando.");
-//            break;
-//        }
-//        return resultado;
-//    }
+ 
 }
