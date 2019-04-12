@@ -18,7 +18,10 @@ mostrar r5
 leer r1 en r5
 pedir x
 mostrar x
+guardar x
+guardar a
 
 mostrar r5
 
 leer x en y
+mostrar y

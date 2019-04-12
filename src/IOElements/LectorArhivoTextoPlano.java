@@ -11,8 +11,11 @@ import java.util.ArrayList;
 import javax.annotation.processing.FilerException;
 
 /**
- *
- * @author ASUS
+ * Se lee el archivo de texto.
+ * @author Daniel Gutiérrez 
+ * @author Sebastián Cordero
+ * @version 20190406
+ * @since 1.0
  */
 public class LectorArhivoTextoPlano implements Lector{
     @Override

@@ -9,9 +9,11 @@ import Control.Interprete;
 import Elementos.Analizador;
 import Excepciones.ArchivoVacioException;
 import Excepciones.InstruccionIncorrectaException;
+import Excepciones.VariableGuardadaException;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -28,6 +30,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private int estado;
     private Interprete interprete;
     private Analizador instruccion;
+    private String variable;
+    private HashMap<String, Integer> variables = new HashMap<String, Integer>();
     
     public int getEstado() {
         return estado;
@@ -144,6 +148,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    String[] options = {"Si", "No"};
+    
     /**
      * Se inicia con la lectura del archivo de texto, y dependiendo de ésta, se crean las
      * instrucciones.
@@ -163,8 +169,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, npe.getMessage());
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
-            
-//            instruccion.pedir(variable, variables);
+        } catch (VariableGuardadaException vge) {
+            int opcion = JOptionPane.showOptionDialog(null, vge.getMessage(), "Selecciona un botón",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         }
     }//GEN-LAST:event_bIniciarActionPerformed
 

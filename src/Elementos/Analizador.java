@@ -70,7 +70,7 @@ public class Analizador {
             asignacion.asignar(variables);
         } catch (NumberFormatException nfe) {
             throw new NumberFormatException();
-        } 
+        }
     }
     
     /**
@@ -100,12 +100,20 @@ public class Analizador {
                     pedir(arregloTemporalInstrucciones[1], variables);
                 } catch (NumberFormatException nfe) {
                     pedir(arregloTemporalInstrucciones[1], variables);
+                    throw new NumberFormatException();
                 }
+                    
                 
             break;
 
             case "guardar":
-                variablesGuardadas.add(guardar(arregloTemporalInstrucciones[1], variables));                
+                if(variablesGuardadas.contains(arregloTemporalInstrucciones[1])) {
+                    throw new VariableGuardadaException("La variable " + arregloTemporalInstrucciones[1] + " ya está guardada, deseas reescribir su valor?");
+                } else {
+                    variablesGuardadas.add(guardar(arregloTemporalInstrucciones[1], variables));                
+                    System.out.println(variablesGuardadas);
+                }
+                
             break;
 
             case "leer":
