@@ -22,19 +22,44 @@ import javax.swing.JOptionPane;
 public class Analizador {
     
     private Asignacion asignacion;
+    
+    /**
+     * Las variables que se van asignando se guardan en este Hashmap.
+     */
     private HashMap<String,Float> variables = new HashMap<>();
+    
+    /**
+     * Las variables guardadas, en otro archivo de texto. Se añaden a este ArrayList.
+     */
     private ArrayList<String> variablesGuardadas = new ArrayList<>();
     
-
+    /**
+     * Se obtiene y se muestra el valor de la variable que se pide 'mostrar'.
+     * @param variable
+     * @param variables
+     * @return 
+     */
     public float mostrar(String variable,HashMap variables){
         return (float) variables.get(variable);
     }
     
+    /**
+     * Se le asigna el valor de una varibale, en otra variable aun no creada.
+     * @param variable1
+     * @param variable2
+     * @param variables 
+     */
     public void leerEn(String variable1,String variable2, HashMap variables){
         float valor  = (float) variables.get(variable1);
         variables.put(variable2, valor);        
     }
     
+    /**
+     * Se crea una varibale, y se le asigna un valor. Por medio de un inputDialog.
+     * @param variable
+     * @param variables
+     * @throws NumberFormatException 
+     */
     public void pedir(String variable, HashMap variables) throws NumberFormatException {
         try {
             float resultadoPedir = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para " + variable + ":").trim());                
@@ -42,10 +67,19 @@ public class Analizador {
             asignacion.asignar(variables);
         } catch (NumberFormatException nfe) {
             throw new NumberFormatException();
-        }
-        
+        } 
     }
     
+    /**
+     * Conociendo las instrucciones pedidas en el archivo de texto, se determina su función.
+     * @param opcion
+     * @param arregloTemporalInstrucciones
+     * @param variables
+     * @throws NumberFormatException
+     * @throws InstruccionIncorrectaException
+     * @throws NullPointerException
+     * @throws VariableGuardadaException 
+     */
     public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables) throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
         switch(opcion){
             case "mostrar":
@@ -79,7 +113,15 @@ public class Analizador {
         }
     }
     
-    
+    /**
+     * Se determina la operación para el valor de la variable.
+     * @param lector
+     * @param archivoInstrucciones
+     * @throws IOException
+     * @throws NullPointerException
+     * @throws InstruccionIncorrectaException
+     * @throws VariableGuardadaException 
+     */
     public void determinarInstruccion(Lector lector,String archivoInstrucciones) throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException{
         ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
         if(instrucciones.isEmpty()) {
@@ -108,6 +150,12 @@ public class Analizador {
         determinarInstruccion(lector, archivoInstrucciones);
     }
     
+    /**
+     * Se guardan las variables pedidas en un archivo de texto predeterminado.
+     * @param variable
+     * @param variables
+     * @return 
+     */
     public String guardar(String variable,HashMap variables){
         String linea = ""+variable+" = "+variables.get(variable);
         return linea;

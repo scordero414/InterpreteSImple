@@ -50,6 +50,12 @@ public class Interprete {
         vistaPrincipal.setResizable(false);        
     }
     
+    /**
+     * Se determinan las opciones ó estado de la vista principal, éste estado se
+     * determina dependiendo del botón seleccionado.
+     * @param opcion
+     * @throws IOException 
+     */
     public void determinarOpcionesVista(int opcion) throws IOException{
         switch(opcion){
             case 1:
@@ -79,11 +85,20 @@ public class Interprete {
             System.out.println(ex);
         }
     }
+    
+    /**
+     * Se ejecuta y se lee el archivo de texto.
+     * @throws IOException 
+     */
     public void iniciarInterprete() throws IOException{
         analizador.iniciar(lector,archivoInstrucciones);
         escribirVariablesGuardadas();
     }
     
+    /**
+     * Las variables que se van guardando, se irán añadiendo al archivo de texto.
+     * @throws IOException 
+     */
     public void escribirVariablesGuardadas() throws IOException{
         escritor.escribir(archivoDatos, analizador.getVariablesGuardadas());
         analizador.getVariablesGuardadas().clear();

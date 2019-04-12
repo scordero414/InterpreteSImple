@@ -21,11 +21,22 @@ public class AsignacionCompuesta extends Asignacion{
     public AsignacionCompuesta() {
     }
     
+    /**
+     * Se asigna un valor por medio de una operación a una variable, 
+     * y estas se almacenan en un Hashmap.
+     * @param arregloTemporalInstrucciones
+     * @param variables 
+     */
     public void asignar(String [] arregloTemporalInstrucciones,HashMap variables){
         determinarAsignacionCompuesta(arregloTemporalInstrucciones, variables);
         variables.put(getVariable(), getValor());
     }
     
+    /**
+     * Se determina una operación y ésta se almacena en una variable.
+     * @param arregloTemporalInstrucciones
+     * @param variables 
+     */
     public void determinarAsignacionCompuesta(String [] arregloTemporalInstrucciones,HashMap variables){
         for(int j = 0; j < arregloTemporalInstrucciones.length; j++) {
             if(variables.containsKey(arregloTemporalInstrucciones[j])) {
@@ -37,7 +48,14 @@ public class AsignacionCompuesta extends Asignacion{
         setValor(resultado);
     }
     
-    
+    /**
+     * Se determinan las operaciones 
+     * (suma, resta, multiplicaión, division, modular)
+     * @param operando1
+     * @param operador
+     * @param operando2
+     * @return 
+     */
     public float determinarOperacion(float operando1,char operador,float operando2){
         float resultado = 0;
         switch(operador){

@@ -17,6 +17,10 @@ public class AsignacionSimple extends Asignacion{
         super(variable, valor);
     }
     
+    /**
+     * Se le asigna un valor a una variable, y ésta se guarda en el Hashmap.
+     * @param variables 
+     */
     public void asignar(HashMap variables){
         variables.put(getVariable(), getValor());
     }

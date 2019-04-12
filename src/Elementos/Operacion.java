@@ -34,6 +34,10 @@ public abstract class Operacion {
         this.operando2 = operando2;
     }
     
+    /**
+     * Método para operar dos operandos, determinando su operador.
+     * @return 
+     */
     public abstract float operar();
     
 //    private float operar(float operando1, float operando2){

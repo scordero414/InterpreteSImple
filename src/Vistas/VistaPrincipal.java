@@ -144,6 +144,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Se inicia con la lectura del archivo de texto, y dependiendo de ésta, se crean las
+     * instrucciones.
+     * @param evt 
+     */
     private void bIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIniciarActionPerformed
         estado = 1;
         try {
@@ -158,10 +163,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, npe.getMessage());
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
+            
 //            instruccion.pedir(variable, variables);
         }
     }//GEN-LAST:event_bIniciarActionPerformed
 
+    /**
+     * Salir de la aplicacion.
+     * @param evt 
+     */
     private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
         estado = 3;
         try {
@@ -171,6 +181,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bSalirActionPerformed
 
+    /**
+     * Se abre el archivo de texto, para poder editar el interprete, y las instrucciones.
+     * @param evt 
+     */
     private void bEditarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarArchivoActionPerformed
         estado = 2;
         try {
@@ -180,6 +194,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bEditarArchivoActionPerformed
 
+    /**
+     * Se abre un archivo de texto, mostrando las variables anteriormente guardadas.
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         estado = 4;
         try {
