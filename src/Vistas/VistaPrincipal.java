@@ -172,6 +172,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
+        } catch (ArrayIndexOutOfBoundsException aioe) {
+            JOptionPane.showMessageDialog(null, "Has ingresado una instrucción sin una variable asignada.");
         }
     }//GEN-LAST:event_bIniciarActionPerformed
 
@@ -184,7 +186,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         try {
             interprete.determinarOpcionesVista(estado);
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());;
+            System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_bSalirActionPerformed
 
