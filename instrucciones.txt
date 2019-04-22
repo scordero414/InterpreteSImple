@@ -15,6 +15,7 @@ mostrar x
 
 guardar x
 leer x en y
-guardar y
+guardar r1
 
 mostrar y
+mostrar

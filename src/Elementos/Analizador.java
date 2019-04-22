@@ -120,8 +120,9 @@ public class Analizador {
     
     /**
      * Se determina la operación para el valor de la variable.
-     * @param  
-     * @param archivoInstrucciones
+     * @param lector 
+     * @param archivoInstrucciones Ruta archivo de texto plano, donde se ingresan las instrucciones.
+     * @param archivoDatos Ruta archivo de texto plano, donde se almacenan las variables guardadas.
      * @throws IOException
      * @throws NullPointerException
      * @throws InstruccionIncorrectaException
@@ -158,6 +159,10 @@ public class Analizador {
         return variablesGuardadas;
     }
     
+    /**
+     * Se determinan las instrucciones para conocer el valor de algunas variables.
+     * @param instrucciones ArrayList para conocer las instrucciones.
+     */
     public void determinarInstruccionesNuevas(ArrayList instrucciones){
         for (int i = 0; i < instrucciones.size(); i++) {
             String instruccionTemporal = instrucciones.get(i).toString();
@@ -178,6 +183,10 @@ public class Analizador {
         } 
     }
     
+    /**
+     * Se leen las variables que se han guardado.
+     * @param variablesGuardadas ArrayList con las varuables guardadas.
+     */
     public void leerVariablesGuardadas(ArrayList variablesGuardadas){
         for (int i = 0; i < variablesGuardadas.size(); i++) {
             String instruccionTemporal = variablesGuardadas.get(i).toString();

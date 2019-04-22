@@ -56,7 +56,7 @@ public class Interprete {
     /**
      * Se determinan las opciones ó estado de la vista principal, éste estado se
      * determina dependiendo del botón seleccionado.
-     * @param opcion
+     * @param opcion Botón seleccionado en la vista.
      * @throws IOException 
      */
     public void determinarOpcionesVista(int opcion) throws IOException{
@@ -78,7 +78,7 @@ public class Interprete {
     
     /**
      * Se abre un archivo de texto.
-     * @param archivo 
+     * @param archivo Ruta del archivo de texto plano.
      */
     public void abrirTxt(String archivo){
         try {
