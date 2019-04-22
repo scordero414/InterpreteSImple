@@ -93,7 +93,6 @@ public class Analizador {
                 } catch (NullPointerException np) {
                     throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe.");
                 }
-                    
             break;
 
             case "pedir":
@@ -101,12 +100,17 @@ public class Analizador {
             break;
 
             case "guardar":
-                if(variablesGuardadas.contains(arregloTemporalInstrucciones[1])) {
-                    throw new VariableGuardadaException("La variable " + arregloTemporalInstrucciones[1] + " ya está guardada, deseas reescribir su valor?");
-                } else {
-                    variablesGuardadas.add(guardar(arregloTemporalInstrucciones[1], variables));                
-                    System.out.println(variablesGuardadas);
+                try {
+                    if(variablesGuardadas.contains(arregloTemporalInstrucciones[1])) {
+                        throw new VariableGuardadaException("La variable " + arregloTemporalInstrucciones[1] + " ya está guardada, deseas reescribir su valor?");
+                    } else {
+                        variablesGuardadas.add(guardar(arregloTemporalInstrucciones[1], variables));                
+                        System.out.println(variablesGuardadas);
+                    }
+                } catch (NullPointerException np) {
+                    throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe.");
                 }
+                
                 
             break;
 
@@ -135,7 +139,6 @@ public class Analizador {
         if(instrucciones.isEmpty()) {
             throw new ArchivoVacioException();
         }
-        //leerVariablesGuardadas(variablesGuardadas);
         determinarInstruccionesNuevas(instrucciones);
         
     }    
@@ -188,20 +191,7 @@ public class Analizador {
      * Se leen las variables que se han guardado.
      * @param variablesGuardadas ArrayList con las varuables guardadas.
      */
-//    public void leerVariablesGuardadas(ArrayList variablesGuardadas){
-//        for (int i = 0; i < variablesGuardadas.size(); i++) {
-//            String instruccionTemporal = variablesGuardadas.get(i).toString();
-//            if(instruccionTemporal.equals("")){
-//                continue;
-//            }
-//            String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
-//                asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Float.parseFloat(arregloTemporalInstrucciones[0]));
-//                asignacion.asignar(variables);
-//        } 
-//    }
-    
     public void leerVariablesGuardadas(ArrayList variablesEnTexto){
-        
         for (int i = 0; i < variablesEnTexto.size(); i++) {
             if(variablesEnTexto.isEmpty()){
                 break;

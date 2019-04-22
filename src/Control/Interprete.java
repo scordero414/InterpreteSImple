@@ -6,6 +6,7 @@
 package Control;
 
 import Elementos.Analizador;
+import Elementos.ControladorIO;
 import Elementos.Operacion;
 import Excepciones.ArchivoVacioException;
 import Excepciones.InstruccionIncorrectaException;
@@ -33,18 +34,12 @@ import jdk.nashorn.internal.objects.NativeArray;
  * @since 1.0
  */
 public class Interprete {
-    private Lector lector;
-    private Escritor escritor;
     private Analizador analizador;
-    private static String archivoInstrucciones = "instrucciones.txt";
-    private static String archivoDatos = "archivoDestino.txt";
+    private ControladorIO controladorIO;
     
-    
-    public Interprete() throws IOException {
-        lector = new LectorArhivoTextoPlano();
-        escritor = new EscritorArchivoTextoPlano();
-        analizador = new Analizador();
-        
+    public Interprete() throws IOException {   
+        controladorIO = new ControladorIO();
+        analizador = new Analizador();        
     }
         
     public static void main(String[] args) throws IOException{
@@ -65,47 +60,29 @@ public class Interprete {
                 iniciarInterprete();
             break;
             case 2:
-                abrirTxt(archivoInstrucciones);
+                controladorIO.abrirTxt(controladorIO.getArchivoInstrucciones());
             break;
             case 3:
                 System.exit(0);
             break;
             case 4:
-                abrirTxt(archivoDatos);
+                controladorIO.abrirTxt(controladorIO.getArchivoDatos());
             break;
         }
     }
     
-    /**
-     * Se abre un archivo de texto.
-     * @param archivo Ruta del archivo de texto plano.
-     */
-    public void abrirTxt(String archivo){
-        try {
-            File objectTxt = new File(archivo);
-            Desktop.getDesktop().open(objectTxt);
-        }catch (IOException ex) {
-            System.out.println(ex);
-        }
-    }
+    
     
     /**
      * Se ejecuta y se lee el archivo de texto.
      * @throws IOException 
      */
     public void iniciarInterprete() throws IOException{
-        analizador.iniciar(lector,archivoInstrucciones,archivoDatos);
-        escribirVariablesGuardadas();
+        analizador.iniciar(controladorIO.getLector(),controladorIO.getArchivoInstrucciones(),controladorIO.getArchivoDatos());
+        controladorIO.escribirVariablesGuardadas(analizador);
     }
     
-    /**
-     * Las variables que se van guardando, se irán añadiendo al archivo de texto.
-     * @throws IOException 
-     */
-    public void escribirVariablesGuardadas() throws IOException{
-        escritor.escribir(archivoDatos, analizador.getVariablesGuardadas());
-        analizador.getVariablesGuardadas().clear();
-    }
+    
     
     
 }

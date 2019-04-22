@@ -164,14 +164,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         } catch (ArchivoVacioException ave) {
             JOptionPane.showMessageDialog(null, "El archivo de texto esta vacío!");
         } catch (InstruccionIncorrectaException ie) {
-            JOptionPane.showMessageDialog(null, ie.getMessage());
+            JOptionPane.showMessageDialog(null,ie.getMessage());
         } catch (NullPointerException npe) {
             JOptionPane.showMessageDialog(null, npe.getMessage());
         } catch (VariableGuardadaException vge) {
-            int opcion = JOptionPane.showOptionDialog(null, vge.getMessage(), "Selecciona un botón",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-//        } catch (NumberFormatException nfe) {
-//            JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
+            int opcion = JOptionPane.showOptionDialog(null,vge.getMessage(), "Selecciona un botón",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
         } catch (ArrayIndexOutOfBoundsException aioe) {
             JOptionPane.showMessageDialog(null, "Has ingresado una instrucción sin una variable asignada.");
         }
