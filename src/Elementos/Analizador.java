@@ -188,18 +188,6 @@ public class Analizador {
      * Se leen las variables que se han guardado.
      * @param variablesGuardadas ArrayList con las varuables guardadas.
      */
-//    public void leerVariablesGuardadas(ArrayList variablesGuardadas){
-//        for (int i = 0; i < variablesGuardadas.size(); i++) {
-//            String instruccionTemporal = variablesGuardadas.get(i).toString();
-//            if(instruccionTemporal.equals("")){
-//                continue;
-//            }
-//            String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
-//                asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Float.parseFloat(arregloTemporalInstrucciones[0]));
-//                asignacion.asignar(variables);
-//        } 
-//    }
-    
     public void leerVariablesGuardadas(ArrayList variablesEnTexto){
         
         for (int i = 0; i < variablesEnTexto.size(); i++) {
