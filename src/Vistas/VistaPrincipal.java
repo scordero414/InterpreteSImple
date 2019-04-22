@@ -167,11 +167,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ie.getMessage());
         } catch (NullPointerException npe) {
             JOptionPane.showMessageDialog(null, npe.getMessage());
-        } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
         } catch (VariableGuardadaException vge) {
             int opcion = JOptionPane.showOptionDialog(null, vge.getMessage(), "Selecciona un botón",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
         }
     }//GEN-LAST:event_bIniciarActionPerformed
 

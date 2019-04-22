@@ -38,8 +38,8 @@ public class Analizador {
     
     /**
      * Se obtiene y se muestra el valor de la variable que se pide 'mostrar'.
-     * @param variable
-     * @param variables
+     * @param variablel variable a la cual se quiere mostrar el valor. 
+     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
      * @return 
      */
     public float mostrar(String variable,HashMap variables){
@@ -48,9 +48,9 @@ public class Analizador {
     
     /**
      * Se le asigna el valor de una varibale, en otra variable aun no creada.
-     * @param variable1
-     * @param variable2
-     * @param variables 
+     * @param variable1 variable original
+     * @param variable2 variable a la cual se le quiere transferir el valor.
+     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
      */
     public void leerEn(String variable1,String variable2, HashMap variables){
         float valor  = (float) variables.get(variable1);
@@ -59,8 +59,8 @@ public class Analizador {
     
     /**
      * Se crea una varibale, y se le asigna un valor. Por medio de un inputDialog.
-     * @param variable
-     * @param variables
+     * @param variable a la cual necesitamis darle un valor.
+     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
      * @throws NumberFormatException 
      */
     public void pedir(String variable, HashMap variables) throws NumberFormatException {
@@ -68,22 +68,23 @@ public class Analizador {
             float resultadoPedir = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para " + variable + ":").trim());                
             asignacion = new AsignacionSimple(variable, resultadoPedir);
             asignacion.asignar(variables);
-        } catch (NumberFormatException nfe) {
-            throw new NumberFormatException();
+        } catch(NumberFormatException nfe) {
+            pedir(variable, variables);
         }
+        
     }
     
     /**
      * Conociendo las instrucciones pedidas en el archivo de texto, se determina su función.
-     * @param opcion
-     * @param arregloTemporalInstrucciones
-     * @param variables
+     * @param opcion instruccion que tiene caada linea.
+     * @param arregloTemporalInstrucciones  tiene guardada en cada posicion, una palabra de la linea, con la cual se va a trabajar.
+     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
      * @throws NumberFormatException
      * @throws InstruccionIncorrectaException
      * @throws NullPointerException
      * @throws VariableGuardadaException 
      */
-    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables) throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
+    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables) throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException, ArrayIndexOutOfBoundsException{
         switch(opcion){
             case "mostrar":
                 try {
@@ -96,14 +97,7 @@ public class Analizador {
             break;
 
             case "pedir":
-                try {
-                    pedir(arregloTemporalInstrucciones[1], variables);
-                } catch (NumberFormatException nfe) {
-                    pedir(arregloTemporalInstrucciones[1], variables);
-                    throw new NumberFormatException();
-                }
-                    
-                
+                pedir(arregloTemporalInstrucciones[1], variables);
             break;
 
             case "guardar":
@@ -120,24 +114,51 @@ public class Analizador {
                 leerEn(arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
             break;
             default:
-                throw new InstruccionIncorrectaException("La instrucción '" + opcion + "' no es correcta.");
+                throw new InstruccionIncorrectaException("La instrucción '" + opcion + "' no es correcta."); 
         }
     }
     
     /**
      * Se determina la operación para el valor de la variable.
-     * @param lector
+     * @param  
      * @param archivoInstrucciones
      * @throws IOException
      * @throws NullPointerException
      * @throws InstruccionIncorrectaException
      * @throws VariableGuardadaException 
      */
-    public void determinarInstruccion(Lector lector,String archivoInstrucciones) throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException{
+    public void determinarInstruccion(Lector lector,String archivoInstrucciones,String archivoDatos) throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException{
         ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
+        ArrayList variablesGuardadas = lector.leerArchivo(archivoDatos);
         if(instrucciones.isEmpty()) {
             throw new ArchivoVacioException();
         }
+        //leerVariablesGuardadas(variablesGuardadas);
+        determinarInstruccionesNuevas(instrucciones);
+        
+    }    
+
+    public void iniciar(Lector lector, String archivoInstrucciones, String archivoDatos) throws IOException {
+        determinarInstruccion(lector, archivoInstrucciones,archivoDatos);
+    }
+    
+    /**
+     * Se guardan las variables pedidas en un archivo de texto predeterminado.
+     * @param variable variable a la cual se quiere guardar.
+     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
+     * @return 
+     */
+    public String guardar(String variable,HashMap variables){
+        int resultado = (int) mostrar(variable, variables);
+        String linea =""+variable+" = "+resultado;
+        return linea;
+    }
+
+    public ArrayList<String> getVariablesGuardadas() {
+        return variablesGuardadas;
+    }
+    
+    public void determinarInstruccionesNuevas(ArrayList instrucciones){
         for (int i = 0; i < instrucciones.size(); i++) {
             String instruccionTemporal = instrucciones.get(i).toString();
             if(instruccionTemporal.equals("")){
@@ -153,28 +174,20 @@ public class Analizador {
             }else{
                 String opcion = arregloTemporalInstrucciones[0];
                 determinarInstruccionSimple(opcion, arregloTemporalInstrucciones,variables);
+            } 
+        } 
+    }
+    
+    public void leerVariablesGuardadas(ArrayList variablesGuardadas){
+        for (int i = 0; i < variablesGuardadas.size(); i++) {
+            String instruccionTemporal = variablesGuardadas.get(i).toString();
+            if(instruccionTemporal.equals("")){
+                continue;
             }
-        }
-    }    
-
-    public void iniciar(Lector lector, String archivoInstrucciones) throws IOException {
-        determinarInstruccion(lector, archivoInstrucciones);
+            String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
+                asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Float.parseFloat(arregloTemporalInstrucciones[0]));
+                asignacion.asignar(variables);
+        } 
     }
-    
-    /**
-     * Se guardan las variables pedidas en un archivo de texto predeterminado.
-     * @param variable
-     * @param variables
-     * @return 
-     */
-    public String guardar(String variable,HashMap variables){
-        String linea = ""+variable+" = "+variables.get(variable);
-        return linea;
-    }
-
-    public ArrayList<String> getVariablesGuardadas() {
-        return variablesGuardadas;
-    }
-    
     
 }

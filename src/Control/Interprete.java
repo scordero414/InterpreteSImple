@@ -36,7 +36,6 @@ public class Interprete {
     private Lector lector;
     private Escritor escritor;
     private Analizador analizador;
-    
     private static String archivoInstrucciones = "instrucciones.txt";
     private static String archivoDatos = "archivoDestino.txt";
     
@@ -95,7 +94,7 @@ public class Interprete {
      * @throws IOException 
      */
     public void iniciarInterprete() throws IOException{
-        analizador.iniciar(lector,archivoInstrucciones);
+        analizador.iniciar(lector,archivoInstrucciones,archivoDatos);
         escribirVariablesGuardadas();
     }
     
@@ -107,5 +106,6 @@ public class Interprete {
         escritor.escribir(archivoDatos, analizador.getVariablesGuardadas());
         analizador.getVariablesGuardadas().clear();
     }
+    
     
 }
