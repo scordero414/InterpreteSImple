@@ -1,21 +1,21 @@
 a = 100
-
+mostrar jorge
+jorge = x + 2
 r1 = a + 10
 r2 = a - 10
-r3 = a * 10
+r3 = 1
 r4 = a / 10
 
 mostrar r1
 mostrar r2
 mostrar r3
 mostrar r4
+mostrar jorge
 
-pedir x
-mostrar x
+guardar jorge
 
 guardar x
 leer x en y
-guardar r1
+guardar r3
 
 mostrar y
-mostrar

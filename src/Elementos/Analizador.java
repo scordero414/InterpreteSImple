@@ -130,7 +130,8 @@ public class Analizador {
      */
     public void determinarInstruccion(Lector lector,String archivoInstrucciones,String archivoDatos) throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException{
         ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
-        ArrayList variablesGuardadas = lector.leerArchivo(archivoDatos);
+        ArrayList nuevasVariables = lector.leerArchivo(archivoDatos);
+        leerVariablesGuardadas(nuevasVariables);
         if(instrucciones.isEmpty()) {
             throw new ArchivoVacioException();
         }
@@ -187,16 +188,34 @@ public class Analizador {
      * Se leen las variables que se han guardado.
      * @param variablesGuardadas ArrayList con las varuables guardadas.
      */
-    public void leerVariablesGuardadas(ArrayList variablesGuardadas){
-        for (int i = 0; i < variablesGuardadas.size(); i++) {
-            String instruccionTemporal = variablesGuardadas.get(i).toString();
-            if(instruccionTemporal.equals("")){
-                continue;
+//    public void leerVariablesGuardadas(ArrayList variablesGuardadas){
+//        for (int i = 0; i < variablesGuardadas.size(); i++) {
+//            String instruccionTemporal = variablesGuardadas.get(i).toString();
+//            if(instruccionTemporal.equals("")){
+//                continue;
+//            }
+//            String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
+//                asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Float.parseFloat(arregloTemporalInstrucciones[0]));
+//                asignacion.asignar(variables);
+//        } 
+//    }
+    
+    public void leerVariablesGuardadas(ArrayList variablesEnTexto){
+        
+        for (int i = 0; i < variablesEnTexto.size(); i++) {
+            if(variablesEnTexto.isEmpty()){
+                break;
+            }else{
+                String line = (String) variablesEnTexto.get(i);
+                String[] linea  = line.split(" ");
+                String variable = linea[0];
+                System.out.println(linea[2]);
+                Float valor = Float.parseFloat(linea[2]);
+                Asignacion nuevaAsignacion = new AsignacionSimple(variable, valor);
+                nuevaAsignacion.asignar(variables);
+                System.out.println(variables);
             }
-            String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
-                asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Float.parseFloat(arregloTemporalInstrucciones[0]));
-                asignacion.asignar(variables);
-        } 
+        }
     }
     
 }
