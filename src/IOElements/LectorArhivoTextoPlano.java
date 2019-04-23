@@ -19,7 +19,7 @@ import javax.annotation.processing.FilerException;
  */
 public class LectorArhivoTextoPlano implements Lector{
     @Override
-    public ArrayList leerArchivo(String archivo) throws IOException {
+    public ArrayList<String> leerArchivo(String archivo) throws IOException {
         RandomAccessFile lector = new RandomAccessFile(archivo, "r");
         ArrayList<String> instrucciones = new ArrayList<>();
         String linea = null;

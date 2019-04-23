@@ -16,9 +16,9 @@ import java.util.HashMap;
  */
 public abstract class Asignacion {
     private String variable;
-    private float valor;
+    private double valor;
 
-    public Asignacion(String variable, float valor) {
+    public Asignacion(String variable, double valor) {
         this.variable = variable;
         this.valor = valor;
     }         
@@ -37,11 +37,11 @@ public abstract class Asignacion {
         this.variable = variable;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
     

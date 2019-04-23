@@ -16,7 +16,7 @@ import java.util.HashMap;
  */
 public class AsignacionSimple extends Asignacion{
     
-    public AsignacionSimple(String variable, float valor) {
+    public AsignacionSimple(String variable, double valor) {
         super(variable, valor);
     }
     

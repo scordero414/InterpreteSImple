@@ -14,12 +14,12 @@ package Elementos;
  */
 public class Multiplicacion extends Operacion{
 
-    public Multiplicacion(float operando1, float operando2) {
+    public Multiplicacion(double operando1, double operando2) {
         super(operando1, operando2);
     }
 
     @Override
-    public float operar() {
+    public double operar() {
         return getOperando1() * getOperando2();
     }
     

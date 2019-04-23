@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class AsignacionCompuesta extends Asignacion{
     private Operacion operacion;
     
-    public AsignacionCompuesta(String variable, float valor) {
+    public AsignacionCompuesta(String variable, double valor) {
         super(variable, valor);
     }
 
@@ -30,6 +30,7 @@ public class AsignacionCompuesta extends Asignacion{
      * @param arregloTemporalInstrucciones
      * @param variables 
      */
+    @Override
     public void asignar(String [] arregloTemporalInstrucciones,HashMap variables){
         determinarAsignacionCompuesta(arregloTemporalInstrucciones, variables);
         variables.put(getVariable(), getValor());
@@ -43,10 +44,10 @@ public class AsignacionCompuesta extends Asignacion{
     public void determinarAsignacionCompuesta(String [] arregloTemporalInstrucciones,HashMap variables){
         for(int j = 0; j < arregloTemporalInstrucciones.length; j++) {
             if(variables.containsKey(arregloTemporalInstrucciones[j])) {
-                arregloTemporalInstrucciones[j] = Float.toString((float) variables.get(arregloTemporalInstrucciones[j]));
+                arregloTemporalInstrucciones[j] = Double.toString((double) variables.get(arregloTemporalInstrucciones[j]));
             }
         }
-        float resultado = determinarOperacion(Float.parseFloat(arregloTemporalInstrucciones[2]),arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-2].charAt(0),Float.parseFloat(arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1]));
+        double resultado = determinarOperacion((arregloTemporalInstrucciones[2]),arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-2].charAt(0),Double.parseDouble(arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1]));
         setVariable(arregloTemporalInstrucciones[0]);
         setValor(resultado);
     }
@@ -59,8 +60,8 @@ public class AsignacionCompuesta extends Asignacion{
      * @param operando2
      * @return 
      */
-    public float determinarOperacion(float operando1,char operador,float operando2){
-        float resultado = 0;
+    public double determinarOperacion(double operando1,char operador,double operando2){
+        double resultado = 0;
         switch(operador){
             case '+':
                 operacion = new Suma(operando1, operando2);
@@ -93,7 +94,4 @@ public class AsignacionCompuesta extends Asignacion{
     public void asignar(HashMap variables) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    
-
 }

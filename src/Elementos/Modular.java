@@ -14,12 +14,12 @@ package Elementos;
  */
 public class Modular extends Operacion{
 
-    public Modular(float operando1, float operando2) {
+    public Modular(double operando1, double operando2) {
         super(operando1, operando2);
     }
 
     @Override
-    public float operar() {
+    public double operar() {
         return getOperando1() % getOperando2();
     }
     

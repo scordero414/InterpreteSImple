@@ -14,12 +14,12 @@ package Elementos;
  */
 public class Division extends Operacion{
 
-    public Division(float operando1, float operando2) {
+    public Division(double operando1, double operando2) {
         super(operando1, operando2);
     }
 
     @Override
-    public float operar() {
+    public double operar() {
         return getOperando1() / getOperando2();
     }
     

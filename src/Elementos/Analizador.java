@@ -29,7 +29,7 @@ public class Analizador {
     /**
      * Las variables que se van asignando se guardan en este Hashmap.
      */
-    private HashMap<String,Float> variables = new HashMap<>();
+    private HashMap<String,Double> variables = new HashMap<>();
     
     /**
      * Las variables guardadas, en otro archivo de texto. Se añaden a este ArrayList.
@@ -42,8 +42,8 @@ public class Analizador {
      * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
      * @return 
      */
-    public float mostrar(String variable,HashMap variables){
-        return (float) variables.get(variable);
+    public double mostrar(String variable,HashMap variables){
+        return (double) variables.get(variable);
     }
     
     /**
@@ -53,7 +53,7 @@ public class Analizador {
      * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
      */
     public void leerEn(String variable1,String variable2, HashMap variables){
-        float valor  = (float) variables.get(variable1);
+        double valor  = (double) variables.get(variable1);
         variables.put(variable2, valor);        
     }
     
@@ -65,7 +65,7 @@ public class Analizador {
      */
     public void pedir(String variable, HashMap variables) throws NumberFormatException {
         try {
-            float resultadoPedir = Float.parseFloat(JOptionPane.showInputDialog("Ingresa el valor para " + variable + ":").trim());                
+            double resultadoPedir = Double.parseDouble(JOptionPane.showInputDialog("Ingresa el valor para " + variable + ":").trim());                
             asignacion = new AsignacionSimple(variable, resultadoPedir);
             asignacion.asignar(variables);
         } catch(NumberFormatException nfe) {
@@ -88,7 +88,7 @@ public class Analizador {
         switch(opcion){
             case "mostrar":
                 try {
-                    float resultado = mostrar(arregloTemporalInstrucciones[1], variables);
+                    double resultado = mostrar(arregloTemporalInstrucciones[1], variables);
                     JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+resultado);
                 } catch (NullPointerException np) {
                     throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe. \n"
@@ -136,8 +136,8 @@ public class Analizador {
      * @throws VariableGuardadaException 
      */
     public void determinarInstruccion(Lector lector,String archivoInstrucciones,String archivoDatos) throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException{
-        ArrayList instrucciones = lector.leerArchivo(archivoInstrucciones);
-        ArrayList nuevasVariables = lector.leerArchivo(archivoDatos);
+        ArrayList<String> instrucciones = lector.leerArchivo(archivoInstrucciones);
+        ArrayList<String> nuevasVariables = lector.leerArchivo(archivoDatos);
         leerVariablesGuardadas(nuevasVariables);
         if(instrucciones.isEmpty()) {
             throw new ArchivoVacioException();
@@ -157,7 +157,7 @@ public class Analizador {
      * @return 
      */
     public String guardar(String variable,HashMap variables){
-        int resultado = (int) mostrar(variable, variables);
+        double resultado = mostrar(variable, variables);
         String linea =""+variable+" = "+resultado;
         return linea;
     }
@@ -180,7 +180,7 @@ public class Analizador {
             }
             String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
-                asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Float.parseFloat(arregloTemporalInstrucciones[2]));
+                asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]));
                 asignacion.asignar(variables);
             }else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
                 asignacion = new AsignacionCompuesta();
@@ -196,16 +196,19 @@ public class Analizador {
      * Se leen las variables que se han guardado.
      * @param variablesGuardadas ArrayList con las varuables guardadas.
      */
-    public void leerVariablesGuardadas(ArrayList variablesEnTexto){
+    public void leerVariablesGuardadas(ArrayList<String> variablesEnTexto){
         for (int i = 0; i < variablesEnTexto.size(); i++) {
             if(variablesEnTexto.isEmpty()){
                 break;
             }else{
-                String line = (String) variablesEnTexto.get(i);
+                String line = variablesEnTexto.get(i);
+                System.out.println(line);
                 String[] linea  = line.split(" ");
                 String variable = linea[0];
                 System.out.println(linea[2]);
-                Float valor = Float.parseFloat(linea[2]);
+                String linea2 = linea[2];
+                System.out.println(variable+" "+linea2);
+                double valor = Double.parseDouble(line.split(" ")[2]);
                 Asignacion nuevaAsignacion = new AsignacionSimple(variable, valor);
                 nuevaAsignacion.asignar(variables);
                 System.out.println(variables);
