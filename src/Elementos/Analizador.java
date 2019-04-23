@@ -198,10 +198,13 @@ public class Analizador {
      */
     public void leerVariablesGuardadas(ArrayList variablesEnTexto){
         for (int i = 0; i < variablesEnTexto.size(); i++) {
+            String line = variablesEnTexto.get(i).toString();
             if(variablesEnTexto.isEmpty()){
                 break;
-            }else{
-                String line = (String) variablesEnTexto.get(i);
+            }else
+            if(line.equals("")){
+                continue;
+            }
                 String[] linea  = line.split(" ");
                 String variable = linea[0];
                 System.out.println(linea[2]);
@@ -209,7 +212,6 @@ public class Analizador {
                 Asignacion nuevaAsignacion = new AsignacionSimple(variable, valor);
                 nuevaAsignacion.asignar(variables);
                 System.out.println(variables);
-            }
         }
     }
     
