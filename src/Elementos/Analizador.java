@@ -84,14 +84,15 @@ public class Analizador {
      * @throws NullPointerException
      * @throws VariableGuardadaException 
      */
-    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables) throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException, ArrayIndexOutOfBoundsException{
+    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables, int cont) throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException, ArrayIndexOutOfBoundsException{
         switch(opcion){
             case "mostrar":
                 try {
                     float resultado = mostrar(arregloTemporalInstrucciones[1], variables);
                     JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+resultado);
                 } catch (NullPointerException np) {
-                    throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe.");
+                    throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe. \n"
+                                                 + "En la fila " + cont);
                 }
             break;
 
@@ -108,7 +109,8 @@ public class Analizador {
                         System.out.println(variablesGuardadas);
                     }
                 } catch (NullPointerException np) {
-                    throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe.");
+                    throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe.\n"
+                                                 + "En la fila " + cont);
                 }
                 
                 
@@ -118,7 +120,8 @@ public class Analizador {
                 leerEn(arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
             break;
             default:
-                throw new InstruccionIncorrectaException("La instrucción '" + opcion + "' no es correcta."); 
+                throw new InstruccionIncorrectaException("La instrucción '" + opcion + "' no es correcta.\n"
+                                                 + "En la fila " + cont);
         }
     }
     
@@ -168,7 +171,9 @@ public class Analizador {
      * @param instrucciones ArrayList para conocer las instrucciones.
      */
     public void determinarInstruccionesNuevas(ArrayList instrucciones){
+        int cont = 0;
         for (int i = 0; i < instrucciones.size(); i++) {
+            cont = cont + 1;
             String instruccionTemporal = instrucciones.get(i).toString();
             if(instruccionTemporal.equals("")){
                 continue;
@@ -182,7 +187,7 @@ public class Analizador {
                 asignacion.asignar(arregloTemporalInstrucciones, variables);
             }else{
                 String opcion = arregloTemporalInstrucciones[0];
-                determinarInstruccionSimple(opcion, arregloTemporalInstrucciones,variables);
+                determinarInstruccionSimple(opcion, arregloTemporalInstrucciones,variables, cont);
             } 
         } 
     }
