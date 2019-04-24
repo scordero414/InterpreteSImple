@@ -189,15 +189,16 @@ public class Analizador {
             if(instruccionTemporal.equals("")){
                 continue;
             }
-            if((instruccionTemporal.length()==1)){
+            
+            String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
+            if((arregloTemporalInstrucciones.length ==1)){
                 throw new ArrayIndexOutOfBoundsException("Instruccion incorrecta.\n *Linea: "+cont);
             }
-            String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
                 asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]));
                 asignacion.asignar(variables);
             }else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
-                
+
                 if(!variables.containsKey(arregloTemporalInstrucciones[2])) {
                     try {
                         Float.parseFloat(arregloTemporalInstrucciones[2]);
@@ -212,13 +213,14 @@ public class Analizador {
                         asignacion = new AsignacionSimple(arregloTemporalInstrucciones[4],0);
                         asignacion.asignar(variables);
                     }
-                    
+
                 }
                 asignacion = new AsignacionCompuesta();
                 asignacion.asignar(arregloTemporalInstrucciones, variables);
             }else{
                 String opcion = arregloTemporalInstrucciones[0];
                 determinarInstruccionSimple(opcion, arregloTemporalInstrucciones,variables, cont);
+
             } 
         } 
     }
