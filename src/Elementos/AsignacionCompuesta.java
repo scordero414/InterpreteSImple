@@ -47,7 +47,7 @@ public class AsignacionCompuesta extends Asignacion{
                 arregloTemporalInstrucciones[j] = Double.toString((double) variables.get(arregloTemporalInstrucciones[j]));
             }
         }
-        double resultado = determinarOperacion((arregloTemporalInstrucciones[2]),arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-2].charAt(0),Double.parseDouble(arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1]));
+        double resultado = determinarOperacion(Double.parseDouble(arregloTemporalInstrucciones[2]),arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-2].charAt(0),Double.parseDouble(arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1]));
         setVariable(arregloTemporalInstrucciones[0]);
         setValor(resultado);
     }

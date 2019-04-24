@@ -6,6 +6,8 @@
 package IOElements;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 /**
@@ -16,5 +18,6 @@ import java.util.ArrayList;
  * @since 1.0
  */
 public interface Escritor {
-    public abstract void escribir(String archivoDestino, ArrayList variablesGuardadas) throws IOException;
+    static Charset charset = Charset.forName("UTF-8");
+    public abstract void escribir(Path archivoDestino, ArrayList variablesGuardadas) throws IOException;
 }

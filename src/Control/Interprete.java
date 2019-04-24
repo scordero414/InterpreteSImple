@@ -54,19 +54,19 @@ public class Interprete {
      * @param opcion Botón seleccionado en la vista.
      * @throws IOException 
      */
-    public void determinarOpcionesVista(int opcion) throws IOException{
+    public void determinarOpcionesVista(int opcion) throws IOException,ArrayIndexOutOfBoundsException{
         switch(opcion){
             case 1:
                 iniciarInterprete();
             break;
             case 2:
-                controladorIO.abrirTxt(controladorIO.getArchivoInstrucciones());
+                controladorIO.abrirTxt(controladorIO.getRutaArchivoInstrucciones());
             break;
             case 3:
                 System.exit(0);
             break;
             case 4:
-                controladorIO.abrirTxt(controladorIO.getArchivoDatos());
+                controladorIO.abrirTxt(controladorIO.getRutaArchivoDatos());
             break;
         }
     }
@@ -77,8 +77,8 @@ public class Interprete {
      * Se ejecuta y se lee el archivo de texto.
      * @throws IOException 
      */
-    public void iniciarInterprete() throws IOException{
-        analizador.iniciar(controladorIO.getLector(),controladorIO.getArchivoInstrucciones(),controladorIO.getArchivoDatos());
+    public void iniciarInterprete() throws IOException,ArrayIndexOutOfBoundsException{
+        analizador.iniciar(controladorIO.getLector(), controladorIO.getArchivoInstrucciones(), controladorIO.getArchivoDatos());
         controladorIO.escribirVariablesGuardadas(analizador);
     }
     

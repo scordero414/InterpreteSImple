@@ -12,6 +12,8 @@ import IOElements.LectorArhivoTextoPlano;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  *
@@ -20,8 +22,10 @@ import java.io.IOException;
 public class ControladorIO {
     private Lector lector;
     private Escritor escritor;
-    private String archivoInstrucciones = "instrucciones.txt";
-    private String archivoDatos = "archivoDestino.txt";
+    private Path archivoDatos = Paths.get("archivoDestino.txt");
+    private Path archivoInstrucciones = Paths.get("archivoInstrucciones.txt");
+    private File rutaArchivoDatos = new File("archivoDestino.txt");
+    private File rutaArchivoInstrucciones = new File("archivoInstrucciones.txt");
     
     public ControladorIO(){
         lector = new LectorArhivoTextoPlano();
@@ -32,9 +36,8 @@ public class ControladorIO {
      * Se abre un archivo de texto.
      * @param archivo Ruta del archivo de texto plano.
      */
-    public void abrirTxt(String archivo){
+    public void abrirTxt(File objectTxt){
         try {
-            File objectTxt = new File(archivo);
             Desktop.getDesktop().open(objectTxt);
         }catch (IOException ex) {
             System.out.println(ex);
@@ -58,12 +61,22 @@ public class ControladorIO {
         return escritor;
     }
 
-    public String getArchivoInstrucciones() {
+    public Path getArchivoDatos() {
+        return archivoDatos;
+    }
+
+    public Path getArchivoInstrucciones() {
         return archivoInstrucciones;
     }
 
-    public String getArchivoDatos() {
-        return archivoDatos;
+    public File getRutaArchivoDatos() {
+        return rutaArchivoDatos;
     }
+
+    public File getRutaArchivoInstrucciones() {
+        return rutaArchivoInstrucciones;
+    }
+
+    
     
 }

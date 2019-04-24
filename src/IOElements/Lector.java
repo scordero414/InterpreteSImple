@@ -6,6 +6,8 @@
 package IOElements;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 /**
@@ -16,5 +18,8 @@ import java.util.ArrayList;
  * @since 1.0
  */
 public interface Lector {
-    public abstract ArrayList<String> leerArchivo(String archivo) throws IOException;
+
+    static Charset charset = Charset.forName("UTF-8");
+    
+    public abstract ArrayList<String> leerArchivo(Path archivo) throws IOException;
 }

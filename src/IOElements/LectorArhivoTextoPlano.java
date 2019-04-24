@@ -5,8 +5,14 @@
  */
 package IOElements;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.annotation.processing.FilerException;
 
@@ -18,15 +24,19 @@ import javax.annotation.processing.FilerException;
  * @since 1.0
  */
 public class LectorArhivoTextoPlano implements Lector{
+    
     @Override
-    public ArrayList<String> leerArchivo(String archivo) throws IOException {
-        RandomAccessFile lector = new RandomAccessFile(archivo, "r");
+    public ArrayList<String> leerArchivo(Path archivo) throws IOException {
+        
+        BufferedReader reader = Files.newBufferedReader(archivo, charset);
+        String line = null;
         ArrayList<String> instrucciones = new ArrayList<>();
-        String linea = null;
-        while((linea = lector.readLine()) != null){
-            instrucciones.add(linea);
+        int index = 0;
+        while ((line = reader.readLine()) != null) {
+                instrucciones.add(line);
+                index ++;
         }
-        lector.close();
+        reader.close();
         return instrucciones;
     }
     

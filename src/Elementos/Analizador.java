@@ -11,6 +11,7 @@ import Excepciones.ValorIncorrectoException;
 import Excepciones.VariableGuardadaException;
 import IOElements.Lector;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
@@ -84,7 +85,7 @@ public class Analizador {
      * @throws NullPointerException
      * @throws VariableGuardadaException 
      */
-    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables, int cont) throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException, ArrayIndexOutOfBoundsException{
+    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables, int cont) throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
         switch(opcion){
             case "mostrar":
                 try {
@@ -92,7 +93,7 @@ public class Analizador {
                     JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+resultado);
                 } catch (NullPointerException np) {
                     throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe. \n"
-                                                 + "En la fila " + cont);
+                                                 + "*Linea: "+ cont);
                 }
             break;
 
@@ -110,7 +111,7 @@ public class Analizador {
                     }
                 } catch (NullPointerException np) {
                     throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe.\n"
-                                                 + "En la fila " + cont);
+                                                 + "*Linea: "+ cont);
                 }
                 
                 
@@ -121,7 +122,7 @@ public class Analizador {
             break;
             default:
                 throw new InstruccionIncorrectaException("La instrucción '" + opcion + "' no es correcta.\n"
-                                                 + "En la fila " + cont);
+                                                 + "*Linea: "+ cont);
         }
     }
     
@@ -135,7 +136,7 @@ public class Analizador {
      * @throws InstruccionIncorrectaException
      * @throws VariableGuardadaException 
      */
-    public void determinarInstruccion(Lector lector,String archivoInstrucciones,String archivoDatos) throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException{
+    public void determinarInstruccion(Lector lector,Path archivoInstrucciones,Path archivoDatos) throws IOException, NullPointerException, InstruccionIncorrectaException, VariableGuardadaException,ArrayIndexOutOfBoundsException{
         ArrayList<String> instrucciones = lector.leerArchivo(archivoInstrucciones);
         ArrayList<String> nuevasVariables = lector.leerArchivo(archivoDatos);
         leerVariablesGuardadas(nuevasVariables);
@@ -146,7 +147,7 @@ public class Analizador {
         
     }    
 
-    public void iniciar(Lector lector, String archivoInstrucciones, String archivoDatos) throws IOException {
+    public void iniciar(Lector lector, Path archivoInstrucciones, Path archivoDatos) throws IOException,ArrayIndexOutOfBoundsException {
         determinarInstruccion(lector, archivoInstrucciones,archivoDatos);
     }
     
@@ -170,13 +171,16 @@ public class Analizador {
      * Se determinan las instrucciones para conocer el valor de algunas variables.
      * @param instrucciones ArrayList para conocer las instrucciones.
      */
-    public void determinarInstruccionesNuevas(ArrayList instrucciones){
+    public void determinarInstruccionesNuevas(ArrayList instrucciones)throws ArrayIndexOutOfBoundsException{
         int cont = 0;
         for (int i = 0; i < instrucciones.size(); i++) {
             cont = cont + 1;
             String instruccionTemporal = instrucciones.get(i).toString();
             if(instruccionTemporal.equals("")){
                 continue;
+            }
+            if((instruccionTemporal.length()==1)){
+                throw new ArrayIndexOutOfBoundsException("Instruccion incorrecta.\n *Linea: "+cont);
             }
             String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
@@ -202,13 +206,13 @@ public class Analizador {
                 break;
             }else{
                 String line = variablesEnTexto.get(i);
+                 if(line.equals("")){
+                    continue;
+                }
                 System.out.println(line);
                 String[] linea  = line.split(" ");
                 String variable = linea[0];
-                System.out.println(linea[2]);
-                String linea2 = linea[2];
-                System.out.println(variable+" "+linea2);
-                double valor = Double.parseDouble(line.split(" ")[2]);
+                double valor = Double.parseDouble(linea[linea.length-1]);
                 Asignacion nuevaAsignacion = new AsignacionSimple(variable, valor);
                 nuevaAsignacion.asignar(variables);
                 System.out.println(variables);

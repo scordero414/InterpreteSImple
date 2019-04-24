@@ -5,8 +5,13 @@
  */
 package IOElements;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
@@ -18,13 +23,15 @@ import java.util.ArrayList;
  */
 public class EscritorArchivoTextoPlano implements Escritor{
 
-    @Override
-    public void escribir(String archivoDestino , ArrayList variablesGuardadas) throws IOException {
-        RandomAccessFile escritor = new RandomAccessFile(archivoDestino, "rw");
-        for(int i=0 ; i<variablesGuardadas.size() ; i++){
-            escritor.writeChars((String) variablesGuardadas.get(i)+"\n");
-        }
-        escritor.close();
-    }
     
+    @Override
+    public void escribir(Path archivoDestino , ArrayList variablesGuardadas) throws IOException {
+       BufferedWriter writer = Files.newBufferedWriter(archivoDestino, charset);
+        String result="";
+        for(int i=0 ; i<variablesGuardadas.size() ; i++){
+                result += variablesGuardadas.get(i) + "\r\n";
+                writer.write(result, 0, result.length());
+        }
+        writer.close();
+    }
 }
