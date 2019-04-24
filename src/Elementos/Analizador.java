@@ -67,9 +67,16 @@ public class Analizador {
      */
     public void pedir(String variable, HashMap variables) throws NumberFormatException {
         try {
-            double resultadoPedir = Double.parseDouble(JOptionPane.showInputDialog("Ingresa el valor para " + variable + ":").trim());                
-            asignacion = new AsignacionSimple(variable, resultadoPedir);
-            asignacion.asignar(variables);
+            String resultadoPedir = JOptionPane.showInputDialog(("Ingresa el valor para " + variable + ":").trim());
+            
+            if(resultadoPedir != null){
+                double resultado = Double.parseDouble(resultadoPedir);
+                asignacion = new AsignacionSimple(variable, resultado);
+                asignacion.asignar(variables);
+            } else {
+                System.out.println("Has presionado cancelar!!");
+            }
+            
         } catch(NumberFormatException nfe) {
             pedir(variable, variables);
         }

@@ -12,7 +12,6 @@ mostrar r4
 
 pedir x
 guardar x
-leer r en y
+leer x en y
 
 mostrar y
-
