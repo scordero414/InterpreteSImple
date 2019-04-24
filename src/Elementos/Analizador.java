@@ -11,6 +11,7 @@ import Excepciones.ValorIncorrectoException;
 import Excepciones.VariableGuardadaException;
 import IOElements.Lector;
 import java.io.IOException;
+import static java.lang.Float.parseFloat;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,8 +93,7 @@ public class Analizador {
                     double resultado = mostrar(arregloTemporalInstrucciones[1], variables);
                     JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+resultado);
                 } catch (NullPointerException np) {
-                    throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe. \n"
-                                                 + "*Linea: "+ cont);
+                    JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+ 0);
                 }
             break;
 
@@ -102,22 +102,19 @@ public class Analizador {
             break;
 
             case "guardar":
-                try {
-                    if(variablesGuardadas.contains(arregloTemporalInstrucciones[1])) {
-                        throw new VariableGuardadaException("La variable " + arregloTemporalInstrucciones[1] + " ya está guardada, deseas reescribir su valor?");
-                    } else {
-                        variablesGuardadas.add(guardar(arregloTemporalInstrucciones[1], variables));                
-                        System.out.println(variablesGuardadas);
-                    }
-                } catch (NullPointerException np) {
-                    throw new NullPointerException("La variable '" + arregloTemporalInstrucciones[1] + "' no existe.\n"
-                                                 + "*Linea: "+ cont);
+                if(variablesGuardadas.contains(arregloTemporalInstrucciones[1])) {
+                    throw new VariableGuardadaException("La variable " + arregloTemporalInstrucciones[1] + " ya está guardada, deseas reescribir su valor?");
+                } else {
+                    variablesGuardadas.add(guardar(arregloTemporalInstrucciones[1], variables));                
+                    System.out.println(variablesGuardadas);
                 }
-                
-                
             break;
 
             case "leer":
+                if(!variables.containsKey(arregloTemporalInstrucciones[1])) {
+                    asignacion = new AsignacionSimple(arregloTemporalInstrucciones[1], 0);
+                    asignacion.asignar(variables);
+                }
                 leerEn(arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
             break;
             default:
@@ -158,8 +155,14 @@ public class Analizador {
      * @return 
      */
     public String guardar(String variable,HashMap variables){
-        double resultado = mostrar(variable, variables);
-        String linea =""+variable+" = "+resultado;
+        String linea = "";
+        try {
+            double resultado = mostrar(variable, variables);
+            linea = "" + variable + " = " + resultado;
+        } catch(NullPointerException npe) {
+            linea = "" + variable + " = " + 0;
+        }
+        
         return linea;
     }
 
@@ -187,6 +190,23 @@ public class Analizador {
                 asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]));
                 asignacion.asignar(variables);
             }else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
+                
+                if(!variables.containsKey(arregloTemporalInstrucciones[2])) {
+                    try {
+                        Float.parseFloat(arregloTemporalInstrucciones[2]);
+                    } catch(NumberFormatException nfe) {
+                        asignacion = new AsignacionSimple(arregloTemporalInstrucciones[2],0);
+                        asignacion.asignar(variables);
+                    }
+                } else if(!variables.containsKey(arregloTemporalInstrucciones[4])) {
+                    try {
+                        Float.parseFloat(arregloTemporalInstrucciones[4]);
+                    } catch(NumberFormatException nfe) {
+                        asignacion = new AsignacionSimple(arregloTemporalInstrucciones[4],0);
+                        asignacion.asignar(variables);
+                    }
+                    
+                }
                 asignacion = new AsignacionCompuesta();
                 asignacion.asignar(arregloTemporalInstrucciones, variables);
             }else{

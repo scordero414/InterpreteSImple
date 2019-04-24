@@ -1,5 +1,5 @@
 a = 100
-mostrar x
+
 r1 = a + 10
 r2 = a - 10
 r3 = a * 10
@@ -11,10 +11,8 @@ mostrar r3
 mostrar r4
 
 pedir x
-mostrar x
-
 guardar x
-leer x en y
+leer r en y
 
 mostrar y
 
