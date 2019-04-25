@@ -6,6 +6,8 @@
 package Elementos;
 
 import Excepciones.ArchivoVacioException;
+import Excepciones.DivisionCeroException;
+import Excepciones.ExcedeLimiteInstruccionException;
 import Excepciones.InstruccionIncorrectaException;
 import Excepciones.ValorIncorrectoException;
 import Excepciones.VariableGuardadaException;
@@ -93,7 +95,7 @@ public class Analizador {
      * @throws NullPointerException
      * @throws VariableGuardadaException 
      */
-    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables, int cont) throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
+    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables, int cont)  throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
         switch(opcion){
             case "mostrar":
                 try {
@@ -181,7 +183,7 @@ public class Analizador {
      * Se determinan las instrucciones para conocer el valor de algunas variables.
      * @param instrucciones ArrayList para conocer las instrucciones.
      */
-    public void determinarInstruccionesNuevas(ArrayList instrucciones)throws ArrayIndexOutOfBoundsException{
+    public void determinarInstruccionesNuevas(ArrayList instrucciones) throws DivisionCeroException, ArrayIndexOutOfBoundsException, ExcedeLimiteInstruccionException{
         int cont = 0;
         for (int i = 0; i < instrucciones.size(); i++) {
             cont = cont + 1;
@@ -197,7 +199,9 @@ public class Analizador {
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
                 asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]));
                 asignacion.asignar(variables);
-            }else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
+            } else if(arregloTemporalInstrucciones.length > 5) {
+                throw new ExcedeLimiteInstruccionException(cont + "");
+            } else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
 
                 if(!variables.containsKey(arregloTemporalInstrucciones[2])) {
                     try {
@@ -215,9 +219,13 @@ public class Analizador {
                     }
 
                 }
-                asignacion = new AsignacionCompuesta();
-                asignacion.asignar(arregloTemporalInstrucciones, variables);
-            }else{
+                try {
+                    asignacion = new AsignacionCompuesta();
+                    asignacion.asignar(arregloTemporalInstrucciones, variables);
+                } catch(DivisionCeroException dce) {
+                    throw new DivisionCeroException(cont + "");
+                }
+            } else {
                 String opcion = arregloTemporalInstrucciones[0];
                 determinarInstruccionSimple(opcion, arregloTemporalInstrucciones,variables, cont);
 
@@ -229,7 +237,7 @@ public class Analizador {
      * Se leen las variables que se han guardado.
      * @param variablesGuardadas ArrayList con las varuables guardadas.
      */
-    public void leerVariablesGuardadas(ArrayList<String> variablesEnTexto){
+    public void leerVariablesGuardadas(ArrayList<String> variablesEnTexto) {
         for (int i = 0; i < variablesEnTexto.size(); i++) {
             String line = variablesEnTexto.get(i).toString();
             if(variablesEnTexto.isEmpty()){

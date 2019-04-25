@@ -8,6 +8,8 @@ package Vistas;
 import Control.Interprete;
 import Elementos.Analizador;
 import Excepciones.ArchivoVacioException;
+import Excepciones.DivisionCeroException;
+import Excepciones.ExcedeLimiteInstruccionException;
 import Excepciones.InstruccionIncorrectaException;
 import Excepciones.VariableGuardadaException;
 import java.awt.Desktop;
@@ -174,6 +176,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
         } catch (ArrayIndexOutOfBoundsException aioe) {
             JOptionPane.showMessageDialog(null, aioe.getMessage());
+        } catch (ExcedeLimiteInstruccionException ele) {
+            JOptionPane.showMessageDialog(null, "No puedes ingresar una asignación con más de una operación. \n *Linea: " +  ele.getMessage());
+        } catch (DivisionCeroException dce) {
+            JOptionPane.showMessageDialog(null, "No puedes dividir por cero! \n *Linea: " + dce.getMessage());
         }
     }//GEN-LAST:event_bIniciarActionPerformed
 

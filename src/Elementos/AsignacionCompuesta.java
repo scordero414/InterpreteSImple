@@ -5,6 +5,7 @@
  */
 package Elementos;
 
+import Excepciones.DivisionCeroException;
 import java.util.HashMap;
 
 /**
@@ -31,7 +32,7 @@ public class AsignacionCompuesta extends Asignacion{
      * @param variables 
      */
     @Override
-    public void asignar(String [] arregloTemporalInstrucciones,HashMap variables){
+    public void asignar(String [] arregloTemporalInstrucciones,HashMap variables) throws DivisionCeroException {
         determinarAsignacionCompuesta(arregloTemporalInstrucciones, variables);
         variables.put(getVariable(), getValor());
     }
@@ -41,7 +42,7 @@ public class AsignacionCompuesta extends Asignacion{
      * @param arregloTemporalInstrucciones
      * @param variables 
      */
-    public void determinarAsignacionCompuesta(String [] arregloTemporalInstrucciones,HashMap variables){
+    public void determinarAsignacionCompuesta(String [] arregloTemporalInstrucciones,HashMap variables) throws DivisionCeroException {
         for(int j = 0; j < arregloTemporalInstrucciones.length; j++) {
             if(variables.containsKey(arregloTemporalInstrucciones[j])) {
                 arregloTemporalInstrucciones[j] = Double.toString((double) variables.get(arregloTemporalInstrucciones[j]));
@@ -60,7 +61,7 @@ public class AsignacionCompuesta extends Asignacion{
      * @param operando2
      * @return 
      */
-    public double determinarOperacion(double operando1,char operador,double operando2){
+    public double determinarOperacion(double operando1,char operador,double operando2) throws DivisionCeroException {
         double resultado = 0;
         switch(operador){
             case '+':
@@ -76,6 +77,9 @@ public class AsignacionCompuesta extends Asignacion{
                 resultado = operacion.operar();
             break;
             case '/':
+                if(operando2 == 0) {
+                    throw new DivisionCeroException();
+                }
                 operacion = new Division(operando1, operando2);
                 resultado = operacion.operar();
             break;
@@ -84,7 +88,7 @@ public class AsignacionCompuesta extends Asignacion{
                 resultado = operacion.operar();
             break;
             default:
-                System.out.println("Hay un problema, el caracter no esta entrando.");
+                System.out.println("Se ingreso otro caracter.");
             break;
         }
         return resultado;
