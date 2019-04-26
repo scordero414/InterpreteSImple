@@ -1,7 +1,8 @@
 a = 100
+b = 2
+x = a + b
 
-x = x + 2
-
+mostrar x
 r1 = a + 10
 r2 = a - 10
 r3 = a * 10
