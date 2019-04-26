@@ -19,33 +19,5 @@ public abstract class InstruccionAsignar extends Instruccion{
     
     @Override
     public abstract void ejecutar(HashMap tablaVariables, String variable1,double valorVariable,double operando2, String variable2, ArrayList variablesGuardas,String [] arregloTemporalInstrucciones);
-//    private String variable;
-//    private double valor;
-//
-//    public InstruccionAsignar(String variable, double valor) {
-//        this.variable = variable;
-//        this.valor = valor;
-//    }         
-//    
-//    public InstruccionAsignar() {
-//    }
-//    
-//    public abstract void asignar(HashMap variables);
-//    public abstract void asignar(String [] arregloTemporalInstrucciones,HashMap variables);
-//    
-//    public String getVariable() {
-//        return variable;
-//    }
-//
-//    public void setVariable(String variable) {
-//        this.variable = variable;
-//    }
-//
-//    public double getValor() {
-//        return valor;
-//    }
-//
-//    public void setValor(double valor) {
-//        this.valor = valor;
-//    }
+
 }

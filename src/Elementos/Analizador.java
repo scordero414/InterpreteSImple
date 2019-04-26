@@ -134,12 +134,12 @@ public class Analizador {
     public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables, int cont)  throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
         switch(opcion){
             case "mostrar":
-                if(!variables.containsKey(arregloTemporalInstrucciones[1])) 
+                if(!variables.containsKey(arregloTemporalInstrucciones[1])) {
                     JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+ 0);
-                    
-                Instruccion mostrar = new InstruccionMostrar();
-                mostrar.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, gestorDeVariables.getVariablesGuardadas(), null);
-                    
+                } else {
+                    Instruccion mostrar = new InstruccionMostrar();
+                    mostrar.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, gestorDeVariables.getVariablesGuardadas(), null);
+                }
             break;
 
             case "pedir":
