@@ -17,9 +17,8 @@ public class InstruccionPedir extends Instruccion {
 
     /**
      * Se crea una varibale, y se le asigna un valor. Por medio de un inputDialog.
-     * @param variable a la cual necesitamis darle un valor.
-     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
-     * @throws NumberFormatException 
+     * @param variable1 a la cual necesitamis darle un valor.
+     * @param tablaVariables tabla de variables, en donde se almacenaran temporalmente los datos.
      */
     @Override
     public void ejecutar(HashMap tablaVariables, String variable1,double valorVariable,double operando2, String variable2, ArrayList variablesGuardas,String [] arregloTemporalInstrucciones) {
