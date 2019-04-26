@@ -11,7 +11,9 @@ import Excepciones.ArchivoVacioException;
 import Excepciones.DivisionCeroException;
 import Excepciones.ExcedeLimiteInstruccionException;
 import Excepciones.InstruccionIncorrectaException;
+import Excepciones.ValorVariableIgualesException;
 import Excepciones.VariableGuardadaException;
+import Excepciones.VariablesAlfabeticasException;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -175,11 +177,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "Has ingresado un valor incorrecto, por favor ingresa un número.");
         } catch (ArrayIndexOutOfBoundsException aioe) {
-            JOptionPane.showMessageDialog(null, aioe.getMessage());
+            JOptionPane.showMessageDialog(null,"Instruccion incorrecta.\n *Linea: " + aioe.getMessage());
         } catch (ExcedeLimiteInstruccionException ele) {
             JOptionPane.showMessageDialog(null, "No puedes ingresar una asignación con más de una operación. \n *Linea: " +  ele.getMessage());
         } catch (DivisionCeroException dce) {
             JOptionPane.showMessageDialog(null, "No puedes dividir por cero! \n *Linea: " + dce.getMessage());
+        } catch (VariablesAlfabeticasException vae) {
+            JOptionPane.showMessageDialog(null, vae.getMessage());
+        } catch (ValorVariableIgualesException vie) {
+            JOptionPane.showMessageDialog(null, "La variable no puede ser igual a su valor por determinar. \n *Linea: " + vie.getMessage());
         }
     }//GEN-LAST:event_bIniciarActionPerformed
 

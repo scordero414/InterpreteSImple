@@ -10,7 +10,9 @@ import Excepciones.DivisionCeroException;
 import Excepciones.ExcedeLimiteInstruccionException;
 import Excepciones.InstruccionIncorrectaException;
 import Excepciones.ValorIncorrectoException;
+import Excepciones.ValorVariableIgualesException;
 import Excepciones.VariableGuardadaException;
+import Excepciones.VariablesAlfabeticasException;
 import IOElements.Lector;
 import java.io.IOException;
 import static java.lang.Float.parseFloat;
@@ -179,11 +181,16 @@ public class Analizador {
         return variablesGuardadas;
     }
     
+    public void determinarValorVariableIgualesException(String valor,String variable, int cont) throws ValorVariableIgualesException {
+        if(valor.equals(variable))
+            throw new ValorVariableIgualesException(cont + "");
+    }
+    
     /**
      * Se determinan las instrucciones para conocer el valor de algunas variables.
      * @param instrucciones ArrayList para conocer las instrucciones.
      */
-    public void determinarInstruccionesNuevas(ArrayList instrucciones) throws DivisionCeroException, ArrayIndexOutOfBoundsException, ExcedeLimiteInstruccionException{
+    public void determinarInstruccionesNuevas(ArrayList instrucciones) throws ValorVariableIgualesException ,DivisionCeroException, VariablesAlfabeticasException,ArrayIndexOutOfBoundsException, ExcedeLimiteInstruccionException{
         int cont = 0;
         for (int i = 0; i < instrucciones.size(); i++) {
             cont = cont + 1;
@@ -193,16 +200,25 @@ public class Analizador {
             }
             
             String [] arregloTemporalInstrucciones = instruccionTemporal.split(" ");
-            if((arregloTemporalInstrucciones.length ==1)){
-                throw new ArrayIndexOutOfBoundsException("Instruccion incorrecta.\n *Linea: "+cont);
+            if((arregloTemporalInstrucciones.length == 1)){
+                throw new ArrayIndexOutOfBoundsException(""+cont);
             }
+            
+            if(!arregloTemporalInstrucciones[0].matches("[A-Za-z0-9]+"))
+                throw new VariablesAlfabeticasException("'"+arregloTemporalInstrucciones[0]+"'" + " no es una variable válida. Debes ingresar una letra.\n *Linea: " + cont );
+            
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
+                determinarValorVariableIgualesException(arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
+                
                 asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]));
                 asignacion.asignar(variables);
             } else if(arregloTemporalInstrucciones.length > 5) {
                 throw new ExcedeLimiteInstruccionException(cont + "");
             } else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
 
+                determinarValorVariableIgualesException(arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
+                determinarValorVariableIgualesException(arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[4], cont);
+                
                 if(!variables.containsKey(arregloTemporalInstrucciones[2])) {
                     try {
                         Float.parseFloat(arregloTemporalInstrucciones[2]);
