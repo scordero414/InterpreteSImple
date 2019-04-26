@@ -78,20 +78,20 @@ public class Analizador {
             if((arregloTemporalInstrucciones.length == 1)){
                 throw new ArrayIndexOutOfBoundsException(""+cont);
             }
-            
-            if(!arregloTemporalInstrucciones[0].matches("^[a-zA-Z0-9]*$"))
+             
+            if( isNumeric(arregloTemporalInstrucciones[0]) | !arregloTemporalInstrucciones[0].matches("^[a-zA-Z0-9]*$"))
                 throw new VariablesAlfabeticasException("'"+arregloTemporalInstrucciones[0]+"'" + " no es una variable válida. Debes ingresar letras.\n *Linea: " + cont );
             
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
-                //determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
+                determinarValorVariableIgualesException(gestorDeVariables.getVariables(), arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
                 InstruccionAsignar asignacion = new AsignacionSimple();
                 asignacion.ejecutar(gestorDeVariables.getVariables(), arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]),0, null, null, null);
             } else if(arregloTemporalInstrucciones.length > 5) {
                 throw new ExcedeLimiteInstruccionException(cont + "");
             } else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
 
-                //determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
-                //determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[4], cont);
+                determinarValorVariableIgualesException(gestorDeVariables.getVariables(), arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
+                determinarValorVariableIgualesException(gestorDeVariables.getVariables(), arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[4], cont);
                 
                 if(!gestorDeVariables.getVariables().containsKey(arregloTemporalInstrucciones[2])) {
                     try {
@@ -246,6 +246,14 @@ public class Analizador {
             throw new ValorVariableIgualesException(cont + "");
     }
 
+    public static boolean isNumeric(String str) { 
+        try {  
+          Double.parseDouble(str);  
+          return true;
+        } catch(NumberFormatException e){  
+          return false;  
+        }  
+      }
     public GestorDeVariables getGestorDeVariables() {
         return gestorDeVariables;
     }

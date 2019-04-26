@@ -11,6 +11,7 @@ mostrar r3
 mostrar r4
 
 pedir x
+
 mostrar x
 
 guardar x
