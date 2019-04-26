@@ -78,8 +78,10 @@ public class Interprete {
      * @throws IOException 
      */
     public void iniciarInterprete() throws IOException,ArrayIndexOutOfBoundsException{
+        controladorIO.limpiarHashMap(analizador);
         analizador.iniciar(controladorIO.getLector(), controladorIO.getArchivoInstrucciones(), controladorIO.getArchivoDatos());
         controladorIO.escribirVariablesGuardadas(analizador);
+        
     }
     
     

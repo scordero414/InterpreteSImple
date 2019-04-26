@@ -34,7 +34,7 @@ public class ControladorIO {
     
     /**
      * Se abre un archivo de texto.
-     * @param archivo Ruta del archivo de texto plano.
+     * @param objectTxt Archivo ya creado, listo para ser abierto.
      */
     public void abrirTxt(File objectTxt){
         try {
@@ -51,6 +51,9 @@ public class ControladorIO {
     public void escribirVariablesGuardadas(Analizador analizador) throws IOException{
         escritor.escribir(archivoDatos, analizador.getVariablesGuardadas());
         analizador.getVariablesGuardadas().clear();
+    }
+    public void limpiarHashMap(Analizador analizador){
+        analizador.getVariables().clear();
     }
     
     public Lector getLector() {
