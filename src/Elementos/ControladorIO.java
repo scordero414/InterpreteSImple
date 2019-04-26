@@ -26,10 +26,13 @@ public class ControladorIO {
     private Path archivoInstrucciones = Paths.get("archivoInstrucciones.txt");
     private File rutaArchivoDatos = new File("archivoDestino.txt");
     private File rutaArchivoInstrucciones = new File("archivoInstrucciones.txt");
+    private GestorDeVariables gestorDeVariables;
     
-    public ControladorIO(){
+    public ControladorIO(GestorDeVariables gestorDeVariables){
         lector = new LectorArhivoTextoPlano();
         escritor = new EscritorArchivoTextoPlano();
+        this.gestorDeVariables = gestorDeVariables;
+        
     }
     
     /**

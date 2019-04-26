@@ -30,16 +30,11 @@ import javax.swing.JOptionPane;
  */
 public class Analizador {
     
-    /**
-     * Las variables que se van asignando se guardan en este Hashmap.
-     */
-    private HashMap<String,Double> variables = new HashMap<>();
-    
-    /**
-     * Las variables guardadas, en otro archivo de texto. Se añaden a este ArrayList.
-     */
-    private ArrayList<String> variablesGuardadas = new ArrayList<>();
-    
+    private GestorDeVariables gestorDeVariables;
+
+    public Analizador(GestorDeVariables gestorDeVariables) {
+        this.gestorDeVariables = gestorDeVariables;
+    }
     
     public void iniciar(Lector lector, Path archivoInstrucciones, Path archivoDatos) throws IOException,ArrayIndexOutOfBoundsException {
         determinarInstruccion(lector, archivoInstrucciones,archivoDatos);
@@ -90,7 +85,7 @@ public class Analizador {
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
                 //determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
                 InstruccionAsignar asignacion = new AsignacionSimple();
-                asignacion.ejecutar(variables, arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]),0, null, null, null);
+                asignacion.ejecutar(gestorDeVariables.getVariables(), arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]),0, null, null, null);
             } else if(arregloTemporalInstrucciones.length > 5) {
                 throw new ExcedeLimiteInstruccionException(cont + "");
             } else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
@@ -98,29 +93,29 @@ public class Analizador {
                 //determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
                 //determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[4], cont);
                 
-                if(!variables.containsKey(arregloTemporalInstrucciones[2])) {
+                if(!gestorDeVariables.getVariables().containsKey(arregloTemporalInstrucciones[2])) {
                     try {
                         Float.parseFloat(arregloTemporalInstrucciones[2]);
                     } catch(NumberFormatException nfe) {
                         InstruccionAsignar asignacion = new AsignacionSimple();
-                        asignacion.ejecutar(variables,arregloTemporalInstrucciones[2],0,0,null,null,null);
+                        asignacion.ejecutar(gestorDeVariables.getVariables(),arregloTemporalInstrucciones[2],0,0,null,null,null);
                     }
-                } else if(!variables.containsKey(arregloTemporalInstrucciones[4])) {
+                } else if(!gestorDeVariables.getVariables().containsKey(arregloTemporalInstrucciones[4])) {
                     try {
                         Float.parseFloat(arregloTemporalInstrucciones[4]);
                     } catch(NumberFormatException nfe) {
                         InstruccionAsignar asignacion = new AsignacionSimple();
-                        asignacion.ejecutar(variables,arregloTemporalInstrucciones[4],0,0,null,null,null);
+                        asignacion.ejecutar(gestorDeVariables.getVariables(),arregloTemporalInstrucciones[4],0,0,null,null,null);
                     }
                 }
                 try {                    
-                    determinarAsignacionCompuesta(arregloTemporalInstrucciones, variables);
+                    determinarAsignacionCompuesta(arregloTemporalInstrucciones, gestorDeVariables.getVariables());
                 } catch(DivisionCeroException dce) {
                     throw new DivisionCeroException(cont + "");
                 }
             } else {
                 String opcion = arregloTemporalInstrucciones[0];
-                determinarInstruccionSimple(opcion, arregloTemporalInstrucciones,variables, cont);
+                determinarInstruccionSimple(opcion, arregloTemporalInstrucciones,gestorDeVariables.getVariables(), cont);
 
             } 
         } 
@@ -143,21 +138,21 @@ public class Analizador {
                     JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+ 0);
                     
                 Instruccion mostrar = new InstruccionMostrar();
-                mostrar.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, variablesGuardadas, null);
+                mostrar.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, gestorDeVariables.getVariablesGuardadas(), null);
                     
             break;
 
             case "pedir":
                 Instruccion pedir = new InstruccionPedir();
-                pedir.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, variablesGuardadas, null);
+                pedir.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, gestorDeVariables.getVariablesGuardadas(), null);
             break;
 
             case "guardar":
-                if(variablesGuardadas.contains(arregloTemporalInstrucciones[1])) {
+                if(gestorDeVariables.getVariablesGuardadas().contains(arregloTemporalInstrucciones[1])) {
                     throw new VariableGuardadaException("La variable " + arregloTemporalInstrucciones[1] + " ya está guardada, deseas reescribir su valor?");
                 } else {
                     Instruccion guardar = new InstruccionGuardar();
-                    guardar.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, variablesGuardadas, null);
+                    guardar.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, gestorDeVariables.getVariablesGuardadas(), null);
                 }
             break;
 
@@ -193,8 +188,8 @@ public class Analizador {
                 String variable = linea[0];
                 double valor = Double.parseDouble(linea[linea.length-1]);
                 Instruccion nuevaAsignacion = new AsignacionSimple();
-                nuevaAsignacion.ejecutar(variables, variable, valor, 0, null, null, null);
-                System.out.println(variables);
+                nuevaAsignacion.ejecutar(gestorDeVariables.getVariables(), variable, valor, 0, null, null, null);
+                System.out.println(gestorDeVariables.getVariables());
         }
     }
     
@@ -219,26 +214,26 @@ public class Analizador {
         switch(operador){
             case '+':
                 operacion = new Suma();
-                operacion.ejecutar(variables, variable1, operando1, operando2, null, variablesGuardadas, null);
+                operacion.ejecutar(gestorDeVariables.getVariables(), variable1, operando1, operando2, null, gestorDeVariables.getVariablesGuardadas(), null);
             break;
             case '-':
                 operacion = new Resta();
-                operacion.ejecutar(variables, variable1, operando1, operando2, null, variablesGuardadas, null);
+                operacion.ejecutar(gestorDeVariables.getVariables(), variable1, operando1, operando2, null, gestorDeVariables.getVariablesGuardadas(), null);
             break;
             case '*':
                 operacion = new Multiplicacion();
-                operacion.ejecutar(variables, variable1, operando1, operando2, null, variablesGuardadas, null);
+                operacion.ejecutar(gestorDeVariables.getVariables(), variable1, operando1, operando2, null, gestorDeVariables.getVariablesGuardadas(), null);
             break;
             case '/':
                 if(operando2 == 0) {
                     throw new DivisionCeroException();
                 }
                 operacion = new Division();
-                operacion.ejecutar(variables, variable1, operando1, operando2, null, variablesGuardadas, null);
+                operacion.ejecutar(gestorDeVariables.getVariables(), variable1, operando1, operando2, null, gestorDeVariables.getVariablesGuardadas(), null);
             break;
             case '%':
                 operacion = new Modular();
-                operacion.ejecutar(variables, variable1, operando1, operando2, null, variablesGuardadas, null);
+                operacion.ejecutar(gestorDeVariables.getVariables(), variable1, operando1, operando2, null, gestorDeVariables.getVariablesGuardadas(), null);
             break;
             default:
                 System.out.println("Se ingreso otro caracter.");
@@ -246,17 +241,18 @@ public class Analizador {
         }
     }
     
-    public ArrayList<String> getVariablesGuardadas() {
-        return variablesGuardadas;
-    }
-    
     public void determinarValorVariableIgualesException(HashMap variables, String valor,String variable, int cont) throws ValorVariableIgualesException {
         if(!(variables.containsKey(variable)) && valor.equals(variable))
             throw new ValorVariableIgualesException(cont + "");
     }
 
-    public HashMap<String, Double> getVariables() {
-        return variables;
+    public GestorDeVariables getGestorDeVariables() {
+        return gestorDeVariables;
     }
-    
+    public HashMap getVariables(){
+        return gestorDeVariables.getVariables();
+    }
+    public ArrayList<String> getVariablesGuardadas() {
+        return gestorDeVariables.getVariablesGuardadas();
+    }
 }

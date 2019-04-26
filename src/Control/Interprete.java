@@ -7,6 +7,7 @@ package Control;
 
 import Elementos.Analizador;
 import Elementos.ControladorIO;
+import Elementos.GestorDeVariables;
 import Elementos.Operacion;
 import Excepciones.ArchivoVacioException;
 import Excepciones.InstruccionIncorrectaException;
@@ -38,8 +39,6 @@ public class Interprete {
     private ControladorIO controladorIO;
     
     public Interprete() throws IOException {   
-        controladorIO = new ControladorIO();
-        analizador = new Analizador();        
     }
         
     public static void main(String[] args) throws IOException{
@@ -78,13 +77,12 @@ public class Interprete {
      * @throws IOException 
      */
     public void iniciarInterprete() throws IOException,ArrayIndexOutOfBoundsException{
+        GestorDeVariables gestorDeVariables = new GestorDeVariables();
+        analizador = new Analizador(gestorDeVariables);   
+        controladorIO = new ControladorIO(gestorDeVariables);
         controladorIO.limpiarHashMap(analizador);
         analizador.iniciar(controladorIO.getLector(), controladorIO.getArchivoInstrucciones(), controladorIO.getArchivoDatos());
-        controladorIO.escribirVariablesGuardadas(analizador);
         
-    }
-    
-    
-    
-    
+        controladorIO.escribirVariablesGuardadas(analizador);
+    }    
 }
