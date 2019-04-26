@@ -14,7 +14,7 @@ import java.util.HashMap;
  * @version 20190406
  * @since 1.0
  */
-public class AsignacionSimple extends Asignacion{
+public class AsignacionSimple extends InstruccionAsignar{
     
     public AsignacionSimple(String variable, double valor) {
         super(variable, valor);

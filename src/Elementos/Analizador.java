@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
  */
 public class Analizador {
     
-    private Asignacion asignacion;
+    private InstruccionAsignar asignacion;
     
     /**
      * Las variables que se van asignando se guardan en este Hashmap.
@@ -101,22 +101,24 @@ public class Analizador {
         switch(opcion){
             case "mostrar":
                 try {
-                    double resultado = mostrar(arregloTemporalInstrucciones[1], variables);
-                    JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+resultado);
+                    Instruccion mostrar = new InstruccionMostrar();
+                    mostrar.ejecutar(variables, arregloTemporalInstrucciones[1], opcion, variablesGuardadas);
                 } catch (NullPointerException np) {
                     JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+ 0);
                 }
             break;
 
             case "pedir":
-                pedir(arregloTemporalInstrucciones[1], variables);
+                Instruccion pedir = new InstruccionPedir();
+                pedir.ejecutar(variables, arregloTemporalInstrucciones[1], opcion, variablesGuardadas);
             break;
 
             case "guardar":
                 if(variablesGuardadas.contains(arregloTemporalInstrucciones[1])) {
                     throw new VariableGuardadaException("La variable " + arregloTemporalInstrucciones[1] + " ya está guardada, deseas reescribir su valor?");
                 } else {
-                    variablesGuardadas.add(guardar(arregloTemporalInstrucciones[1], variables));                
+                    Instruccion guardar = new InstruccionGuardar();
+                    guardar.ejecutar(variables, arregloTemporalInstrucciones[1], opcion, variablesGuardadas);                        
                     System.out.println(variablesGuardadas);
                 }
             break;
@@ -126,7 +128,8 @@ public class Analizador {
                     asignacion = new AsignacionSimple(arregloTemporalInstrucciones[1], 0);
                     asignacion.asignar(variables);
                 }
-                leerEn(arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1],variables);
+                Instruccion leer = new InstruccionLeerEn();
+                leer.ejecutar(variables, arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1], variablesGuardadas);
             break;
             default:
                 throw new InstruccionIncorrectaException("La instrucción '" + opcion + "' no es correcta.\n"
@@ -266,7 +269,7 @@ public class Analizador {
                 String[] linea  = line.split(" ");
                 String variable = linea[0];
                 double valor = Double.parseDouble(linea[linea.length-1]);
-                Asignacion nuevaAsignacion = new AsignacionSimple(variable, valor);
+                InstruccionAsignar nuevaAsignacion = new AsignacionSimple(variable, valor);
                 nuevaAsignacion.asignar(variables);
                 System.out.println(variables);
         }

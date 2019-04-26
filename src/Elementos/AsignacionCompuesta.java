@@ -15,7 +15,7 @@ import java.util.HashMap;
  * @version 20190406
  * @since 1.0
  */
-public class AsignacionCompuesta extends Asignacion{
+public class AsignacionCompuesta extends InstruccionAsignar{
     private Operacion operacion;
     
     public AsignacionCompuesta(String variable, double valor) {
