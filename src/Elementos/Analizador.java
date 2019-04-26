@@ -85,18 +85,18 @@ public class Analizador {
             }
             
             if(!arregloTemporalInstrucciones[0].matches("^[a-zA-Z0-9]*$"))
-                throw new VariablesAlfabeticasException("'"+arregloTemporalInstrucciones[0]+"'" + " no es una variable válida. Debes ingresar una letra.\n *Linea: " + cont );
+                throw new VariablesAlfabeticasException("'"+arregloTemporalInstrucciones[0]+"'" + " no es una variable válida. Debes ingresar letras.\n *Linea: " + cont );
             
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
-                determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
+                //determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
                 InstruccionAsignar asignacion = new AsignacionSimple();
                 asignacion.ejecutar(variables, arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]),0, null, null, null);
             } else if(arregloTemporalInstrucciones.length > 5) {
                 throw new ExcedeLimiteInstruccionException(cont + "");
             } else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
 
-                determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
-                determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[4], cont);
+                //determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
+                //determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[4], cont);
                 
                 if(!variables.containsKey(arregloTemporalInstrucciones[2])) {
                     try {
@@ -253,6 +253,10 @@ public class Analizador {
     public void determinarValorVariableIgualesException(HashMap variables, String valor,String variable, int cont) throws ValorVariableIgualesException {
         if(!(variables.containsKey(variable)) && valor.equals(variable))
             throw new ValorVariableIgualesException(cont + "");
-        
     }
+
+    public HashMap<String, Double> getVariables() {
+        return variables;
+    }
+    
 }
