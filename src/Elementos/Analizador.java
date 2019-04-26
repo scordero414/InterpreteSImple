@@ -84,19 +84,19 @@ public class Analizador {
                 throw new ArrayIndexOutOfBoundsException(""+cont);
             }
             
-            if(!arregloTemporalInstrucciones[0].matches("[A-Za-z0-9]+"))
+            if(!arregloTemporalInstrucciones[0].matches("^[a-zA-Z0-9]*$"))
                 throw new VariablesAlfabeticasException("'"+arregloTemporalInstrucciones[0]+"'" + " no es una variable válida. Debes ingresar una letra.\n *Linea: " + cont );
             
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
-                determinarValorVariableIgualesException(arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
+                determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
                 InstruccionAsignar asignacion = new AsignacionSimple();
                 asignacion.ejecutar(variables, arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]),0, null, null, null);
             } else if(arregloTemporalInstrucciones.length > 5) {
                 throw new ExcedeLimiteInstruccionException(cont + "");
             } else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
 
-                determinarValorVariableIgualesException(arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
-                determinarValorVariableIgualesException(arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[4], cont);
+                determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
+                determinarValorVariableIgualesException(variables, arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[4], cont);
                 
                 if(!variables.containsKey(arregloTemporalInstrucciones[2])) {
                     try {
@@ -139,12 +139,12 @@ public class Analizador {
     public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables, int cont)  throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
         switch(opcion){
             case "mostrar":
-                try {
-                    Instruccion mostrar = new InstruccionMostrar();
-                    mostrar.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, variablesGuardadas, null);
-                } catch (NullPointerException np) {
+                if(!variables.containsKey(arregloTemporalInstrucciones[1])) 
                     JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+ 0);
-                }
+                    
+                Instruccion mostrar = new InstruccionMostrar();
+                mostrar.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, variablesGuardadas, null);
+                    
             break;
 
             case "pedir":
@@ -250,8 +250,9 @@ public class Analizador {
         return variablesGuardadas;
     }
     
-    public void determinarValorVariableIgualesException(String valor,String variable, int cont) throws ValorVariableIgualesException {
-        if(valor.equals(variable))
+    public void determinarValorVariableIgualesException(HashMap variables, String valor,String variable, int cont) throws ValorVariableIgualesException {
+        if(!(variables.containsKey(variable)) && valor.equals(variable))
             throw new ValorVariableIgualesException(cont + "");
+        
     }
 }

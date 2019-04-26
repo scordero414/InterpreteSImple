@@ -1,28 +1,16 @@
 a = 100
 
-pedir h
+x = x + 2
 
-mostrar h
-
-mostrar a
-r1 = a + h
+r1 = a + 10
 r2 = a - 10
 r3 = a * 10
 r4 = a / 10
-
-guardar a
-leer a en b
-b = 5      
-mostrar b+4 
 
 mostrar r1
 mostrar r2
 mostrar r3
 mostrar r4
-
-r2 = 15
-pedir x
-mostrar x
 
 guardar x
 leer x en y
