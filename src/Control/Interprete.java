@@ -38,7 +38,10 @@ public class Interprete {
     private Analizador analizador;
     private ControladorIO controladorIO;
     
-    public Interprete() throws IOException {   
+    public Interprete() throws IOException {  
+        GestorDeVariables gestorDeVariables = new GestorDeVariables();
+        this.analizador = new Analizador(gestorDeVariables);   
+        this.controladorIO = new ControladorIO(gestorDeVariables);
     }
         
     public static void main(String[] args) throws IOException{
@@ -77,12 +80,8 @@ public class Interprete {
      * @throws IOException 
      */
     public void iniciarInterprete() throws IOException,ArrayIndexOutOfBoundsException{
-        GestorDeVariables gestorDeVariables = new GestorDeVariables();
-        analizador = new Analizador(gestorDeVariables);   
-        controladorIO = new ControladorIO(gestorDeVariables);
         controladorIO.limpiarHashMap(analizador);
         analizador.iniciar(controladorIO.getLector(), controladorIO.getArchivoInstrucciones(), controladorIO.getArchivoDatos());
-        
         controladorIO.escribirVariablesGuardadas(analizador);
     }    
 }
