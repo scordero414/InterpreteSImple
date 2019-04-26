@@ -13,5 +13,5 @@ import java.util.HashMap;
  * @author dgutierrezd
  */
 public abstract class Instruccion {
-    public abstract void ejecutar(HashMap tablaVariables, String variable1, String variable2, ArrayList variablesGuardas);
+    public abstract void ejecutar(HashMap tablaVariables, String variable1,double valorVariable,double operando2, String variable2, ArrayList variablesGuardas,String [] arregloTemporalInstrucciones);
 }

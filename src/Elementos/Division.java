@@ -5,6 +5,9 @@
  */
 package Elementos;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Se define la operación (División) a dos operandos.
  * @author Daniel Gutierrez
@@ -14,13 +17,10 @@ package Elementos;
  */
 public class Division extends Operacion{
 
-    public Division(double operando1, double operando2) {
-        super(operando1, operando2);
-    }
 
     @Override
-    public double operar() {
-        return getOperando1() / getOperando2();
+    public void ejecutar(HashMap tablaVariables, String variable1, double valorVariable, double operando2, String variable2, ArrayList variablesGuardas, String[] arregloTemporalInstrucciones) {
+        tablaVariables.put(variable1, (valorVariable/operando2));
     }
     
 }

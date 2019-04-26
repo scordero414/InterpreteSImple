@@ -5,6 +5,7 @@
  */
 package Elementos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,22 +16,14 @@ import java.util.HashMap;
  * @since 1.0
  */
 public class AsignacionSimple extends InstruccionAsignar{
-    
-    public AsignacionSimple(String variable, double valor) {
-        super(variable, valor);
-    }
-    
-    /**
+     /**
      * Se le asigna un valor a una variable, y ésta se guarda en el Hashmap.
      * @param variables 
      */
-    public void asignar(HashMap variables){
-        variables.put(getVariable(), getValor());
+    @Override
+    public void ejecutar(HashMap tablaVariables, String variable1,double valorVariable,double operando2, String variable2, ArrayList variablesGuardas,String [] arregloTemporalInstrucciones) {
+        tablaVariables.put(variable1, valorVariable);
     }
 
-    @Override
-    public void asignar(String[] arregloTemporalInstrucciones, HashMap variables) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }

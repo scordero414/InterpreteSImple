@@ -30,8 +30,6 @@ import javax.swing.JOptionPane;
  */
 public class Analizador {
     
-    private InstruccionAsignar asignacion;
-    
     /**
      * Las variables que se van asignando se guardan en este Hashmap.
      */
@@ -42,101 +40,11 @@ public class Analizador {
      */
     private ArrayList<String> variablesGuardadas = new ArrayList<>();
     
-    /**
-     * Se obtiene y se muestra el valor de la variable que se pide 'mostrar'.
-     * @param variablel variable a la cual se quiere mostrar el valor. 
-     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
-     * @return 
-     */
-    public double mostrar(String variable,HashMap variables){
-        return (double) variables.get(variable);
-    }
     
-    /**
-     * Se le asigna el valor de una varibale, en otra variable aun no creada.
-     * @param variable1 variable original
-     * @param variable2 variable a la cual se le quiere transferir el valor.
-     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
-     */
-    public void leerEn(String variable1,String variable2, HashMap variables){
-        double valor  = (double) variables.get(variable1);
-        variables.put(variable2, valor);        
+    public void iniciar(Lector lector, Path archivoInstrucciones, Path archivoDatos) throws IOException,ArrayIndexOutOfBoundsException {
+        determinarInstruccion(lector, archivoInstrucciones,archivoDatos);
     }
-    
-    /**
-     * Se crea una varibale, y se le asigna un valor. Por medio de un inputDialog.
-     * @param variable a la cual necesitamis darle un valor.
-     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
-     * @throws NumberFormatException 
-     */
-    public void pedir(String variable, HashMap variables) throws NumberFormatException {
-        try {
-            String resultadoPedir = JOptionPane.showInputDialog(("Ingresa el valor para " + variable + ":").trim());
-            
-            if(resultadoPedir != null){
-                double resultado = Double.parseDouble(resultadoPedir);
-                asignacion = new AsignacionSimple(variable, resultado);
-                asignacion.asignar(variables);
-            } else {
-                System.out.println("Has presionado cancelar!!");
-            }
-            
-        } catch(NumberFormatException nfe) {
-            pedir(variable, variables);
-        }
-        
-    }
-    
-    /**
-     * Conociendo las instrucciones pedidas en el archivo de texto, se determina su función.
-     * @param opcion instruccion que tiene caada linea.
-     * @param arregloTemporalInstrucciones  tiene guardada en cada posicion, una palabra de la linea, con la cual se va a trabajar.
-     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
-     * @throws NumberFormatException
-     * @throws InstruccionIncorrectaException
-     * @throws NullPointerException
-     * @throws VariableGuardadaException 
-     */
-    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables, int cont)  throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
-        switch(opcion){
-            case "mostrar":
-                try {
-                    Instruccion mostrar = new InstruccionMostrar();
-                    mostrar.ejecutar(variables, arregloTemporalInstrucciones[1], opcion, variablesGuardadas);
-                } catch (NullPointerException np) {
-                    JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+ 0);
-                }
-            break;
-
-            case "pedir":
-                Instruccion pedir = new InstruccionPedir();
-                pedir.ejecutar(variables, arregloTemporalInstrucciones[1], opcion, variablesGuardadas);
-            break;
-
-            case "guardar":
-                if(variablesGuardadas.contains(arregloTemporalInstrucciones[1])) {
-                    throw new VariableGuardadaException("La variable " + arregloTemporalInstrucciones[1] + " ya está guardada, deseas reescribir su valor?");
-                } else {
-                    Instruccion guardar = new InstruccionGuardar();
-                    guardar.ejecutar(variables, arregloTemporalInstrucciones[1], opcion, variablesGuardadas);                        
-                    System.out.println(variablesGuardadas);
-                }
-            break;
-
-            case "leer":
-                if(!variables.containsKey(arregloTemporalInstrucciones[1])) {
-                    asignacion = new AsignacionSimple(arregloTemporalInstrucciones[1], 0);
-                    asignacion.asignar(variables);
-                }
-                Instruccion leer = new InstruccionLeerEn();
-                leer.ejecutar(variables, arregloTemporalInstrucciones[1], arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1], variablesGuardadas);
-            break;
-            default:
-                throw new InstruccionIncorrectaException("La instrucción '" + opcion + "' no es correcta.\n"
-                                                 + "*Linea: "+ cont);
-        }
-    }
-    
+          
     /**
      * Se determina la operación para el valor de la variable.
      * @param lector 
@@ -157,37 +65,6 @@ public class Analizador {
         determinarInstruccionesNuevas(instrucciones);
         
     }    
-
-    public void iniciar(Lector lector, Path archivoInstrucciones, Path archivoDatos) throws IOException,ArrayIndexOutOfBoundsException {
-        determinarInstruccion(lector, archivoInstrucciones,archivoDatos);
-    }
-    
-    /**
-     * Se guardan las variables pedidas en un archivo de texto predeterminado.
-     * @param variable variable a la cual se quiere guardar.
-     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
-     * @return 
-     */
-    public String guardar(String variable,HashMap variables){
-        String linea = "";
-        try {
-            double resultado = mostrar(variable, variables);
-            linea = "" + variable + " = " + resultado;
-        } catch(NullPointerException npe) {
-            linea = "" + variable + " = " + 0;
-        }
-        
-        return linea;
-    }
-
-    public ArrayList<String> getVariablesGuardadas() {
-        return variablesGuardadas;
-    }
-    
-    public void determinarValorVariableIgualesException(String valor,String variable, int cont) throws ValorVariableIgualesException {
-        if(valor.equals(variable))
-            throw new ValorVariableIgualesException(cont + "");
-    }
     
     /**
      * Se determinan las instrucciones para conocer el valor de algunas variables.
@@ -212,9 +89,8 @@ public class Analizador {
             
             if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length == 3)){
                 determinarValorVariableIgualesException(arregloTemporalInstrucciones[0], arregloTemporalInstrucciones[2], cont);
-                
-                asignacion = new AsignacionSimple(arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]));
-                asignacion.asignar(variables);
+                InstruccionAsignar asignacion = new AsignacionSimple();
+                asignacion.ejecutar(variables, arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]),0, null, null, null);
             } else if(arregloTemporalInstrucciones.length > 5) {
                 throw new ExcedeLimiteInstruccionException(cont + "");
             } else if(arregloTemporalInstrucciones[1].equals("=") & (arregloTemporalInstrucciones.length > 3)){
@@ -226,21 +102,19 @@ public class Analizador {
                     try {
                         Float.parseFloat(arregloTemporalInstrucciones[2]);
                     } catch(NumberFormatException nfe) {
-                        asignacion = new AsignacionSimple(arregloTemporalInstrucciones[2],0);
-                        asignacion.asignar(variables);
+                        InstruccionAsignar asignacion = new AsignacionSimple();
+                        asignacion.ejecutar(variables,arregloTemporalInstrucciones[2],0,0,null,null,null);
                     }
                 } else if(!variables.containsKey(arregloTemporalInstrucciones[4])) {
                     try {
                         Float.parseFloat(arregloTemporalInstrucciones[4]);
                     } catch(NumberFormatException nfe) {
-                        asignacion = new AsignacionSimple(arregloTemporalInstrucciones[4],0);
-                        asignacion.asignar(variables);
+                        InstruccionAsignar asignacion = new AsignacionSimple();
+                        asignacion.ejecutar(variables,arregloTemporalInstrucciones[4],0,0,null,null,null);
                     }
-
                 }
-                try {
-                    asignacion = new AsignacionCompuesta();
-                    asignacion.asignar(arregloTemporalInstrucciones, variables);
+                try {                    
+                    determinarAsignacionCompuesta(arregloTemporalInstrucciones, variables);
                 } catch(DivisionCeroException dce) {
                     throw new DivisionCeroException(cont + "");
                 }
@@ -253,8 +127,57 @@ public class Analizador {
     }
     
     /**
+     * Conociendo las instrucciones pedidas en el archivo de texto, se determina su función.
+     * @param opcion instruccion que tiene caada linea.
+     * @param arregloTemporalInstrucciones  tiene guardada en cada posicion, una palabra de la linea, con la cual se va a trabajar.
+     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
+     * @throws NumberFormatException
+     * @throws InstruccionIncorrectaException
+     * @throws NullPointerException
+     * @throws VariableGuardadaException 
+     */
+    public void determinarInstruccionSimple(String opcion,String [] arregloTemporalInstrucciones,HashMap variables, int cont)  throws NumberFormatException, InstruccionIncorrectaException, NullPointerException, VariableGuardadaException{
+        switch(opcion){
+            case "mostrar":
+                try {
+                    Instruccion mostrar = new InstruccionMostrar();
+                    mostrar.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, variablesGuardadas, null);
+                } catch (NullPointerException np) {
+                    JOptionPane.showMessageDialog(null,"El valor de "+ arregloTemporalInstrucciones[1]+" es: "+ 0);
+                }
+            break;
+
+            case "pedir":
+                Instruccion pedir = new InstruccionPedir();
+                pedir.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, variablesGuardadas, null);
+            break;
+
+            case "guardar":
+                if(variablesGuardadas.contains(arregloTemporalInstrucciones[1])) {
+                    throw new VariableGuardadaException("La variable " + arregloTemporalInstrucciones[1] + " ya está guardada, deseas reescribir su valor?");
+                } else {
+                    Instruccion guardar = new InstruccionGuardar();
+                    guardar.ejecutar(variables, arregloTemporalInstrucciones[1], 0, 0, null, variablesGuardadas, null);
+                }
+            break;
+
+            case "leer":
+                if(!variables.containsKey(arregloTemporalInstrucciones[1])) {
+                    InstruccionAsignar asignacion = new AsignacionSimple();
+                    asignacion.ejecutar(variables,arregloTemporalInstrucciones[1],0,0,null,null,null);
+                }
+                Instruccion leer = new InstruccionLeerEn();
+                leer.ejecutar(variables, arregloTemporalInstrucciones[1],0,0,arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1], null,null);
+            break;
+            default:
+                throw new InstruccionIncorrectaException("La instrucción '" + opcion + "' no es correcta.\n"
+                                                 + "*Linea: "+ cont);
+        }
+    }
+    
+    /**
      * Se leen las variables que se han guardado.
-     * @param variablesGuardadas ArrayList con las varuables guardadas.
+     * @param variablesEnTexto ArrayList con las varuables guardadas.
      */
     public void leerVariablesGuardadas(ArrayList<String> variablesEnTexto) {
         for (int i = 0; i < variablesEnTexto.size(); i++) {
@@ -269,10 +192,66 @@ public class Analizador {
                 String[] linea  = line.split(" ");
                 String variable = linea[0];
                 double valor = Double.parseDouble(linea[linea.length-1]);
-                InstruccionAsignar nuevaAsignacion = new AsignacionSimple(variable, valor);
-                nuevaAsignacion.asignar(variables);
+                Instruccion nuevaAsignacion = new AsignacionSimple();
+                nuevaAsignacion.ejecutar(variables, variable, valor, 0, null, null, null);
                 System.out.println(variables);
         }
     }
     
+    public void determinarAsignacionCompuesta(String [] arregloTemporalInstrucciones,HashMap variables) throws DivisionCeroException {
+        for(int j = 0; j < arregloTemporalInstrucciones.length; j++) {
+            if(variables.containsKey(arregloTemporalInstrucciones[j])) {
+                arregloTemporalInstrucciones[j] = Double.toString((double) variables.get(arregloTemporalInstrucciones[j]));
+            }
+        }
+        determinarOperacion(arregloTemporalInstrucciones[0],Double.parseDouble(arregloTemporalInstrucciones[2]),arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-2].charAt(0),Double.parseDouble(arregloTemporalInstrucciones[arregloTemporalInstrucciones.length-1]));
+    }
+/**
+     * Se determinan las operaciones 
+     * (suma, resta, multiplicaión, division, modular)
+     * @param operando1
+     * @param operador
+     * @param operando2
+     * @return 
+     */
+    public void determinarOperacion(String variable1,double operando1,char operador,double operando2) throws DivisionCeroException {
+        AsignacionCompuesta operacion;
+        switch(operador){
+            case '+':
+                operacion = new Suma();
+                operacion.ejecutar(variables, variable1, operando1, operando2, null, variablesGuardadas, null);
+            break;
+            case '-':
+                operacion = new Resta();
+                operacion.ejecutar(variables, variable1, operando1, operando2, null, variablesGuardadas, null);
+            break;
+            case '*':
+                operacion = new Multiplicacion();
+                operacion.ejecutar(variables, variable1, operando1, operando2, null, variablesGuardadas, null);
+            break;
+            case '/':
+                if(operando2 == 0) {
+                    throw new DivisionCeroException();
+                }
+                operacion = new Division();
+                operacion.ejecutar(variables, variable1, operando1, operando2, null, variablesGuardadas, null);
+            break;
+            case '%':
+                operacion = new Modular();
+                operacion.ejecutar(variables, variable1, operando1, operando2, null, variablesGuardadas, null);
+            break;
+            default:
+                System.out.println("Se ingreso otro caracter.");
+            break;
+        }
+    }
+    
+    public ArrayList<String> getVariablesGuardadas() {
+        return variablesGuardadas;
+    }
+    
+    public void determinarValorVariableIgualesException(String valor,String variable, int cont) throws ValorVariableIgualesException {
+        if(valor.equals(variable))
+            throw new ValorVariableIgualesException(cont + "");
+    }
 }

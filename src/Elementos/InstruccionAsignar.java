@@ -5,6 +5,7 @@
  */
 package Elementos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -14,34 +15,37 @@ import java.util.HashMap;
  * @version 20190406
  * @since 1.0
  */
-public abstract class InstruccionAsignar {
-    private String variable;
-    private double valor;
-
-    public InstruccionAsignar(String variable, double valor) {
-        this.variable = variable;
-        this.valor = valor;
-    }         
+public abstract class InstruccionAsignar extends Instruccion{
     
-    public InstruccionAsignar() {
-    }
-    
-    public abstract void asignar(HashMap variables);
-    public abstract void asignar(String [] arregloTemporalInstrucciones,HashMap variables);
-    
-    public String getVariable() {
-        return variable;
-    }
-
-    public void setVariable(String variable) {
-        this.variable = variable;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
+    @Override
+    public abstract void ejecutar(HashMap tablaVariables, String variable1,double valorVariable,double operando2, String variable2, ArrayList variablesGuardas,String [] arregloTemporalInstrucciones);
+//    private String variable;
+//    private double valor;
+//
+//    public InstruccionAsignar(String variable, double valor) {
+//        this.variable = variable;
+//        this.valor = valor;
+//    }         
+//    
+//    public InstruccionAsignar() {
+//    }
+//    
+//    public abstract void asignar(HashMap variables);
+//    public abstract void asignar(String [] arregloTemporalInstrucciones,HashMap variables);
+//    
+//    public String getVariable() {
+//        return variable;
+//    }
+//
+//    public void setVariable(String variable) {
+//        this.variable = variable;
+//    }
+//
+//    public double getValor() {
+//        return valor;
+//    }
+//
+//    public void setValor(double valor) {
+//        this.valor = valor;
+//    }
 }

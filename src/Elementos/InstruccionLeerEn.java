@@ -14,8 +14,14 @@ import java.util.HashMap;
  */
 public class InstruccionLeerEn extends Instruccion {
 
+    /**
+     * Se le asigna el valor de una varibale, en otra variable aun no creada.
+     * @param variable1 variable original
+     * @param variable2 variable a la cual se le quiere transferir el valor.
+     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
+     */
     @Override
-    public void ejecutar(HashMap tablaVariables, String variable1, String variable2, ArrayList variablesGuardadas) {
+    public void ejecutar(HashMap tablaVariables, String variable1,double valorVariable,double operando2, String variable2, ArrayList variablesGuardadas,String [] arregloTemporalInstrucciones) {
         double valor  = (double) tablaVariables.get(variable1);
         tablaVariables.put(variable2, valor);
     }

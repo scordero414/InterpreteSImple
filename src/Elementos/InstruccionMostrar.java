@@ -15,8 +15,14 @@ import javax.swing.JOptionPane;
  */
 public class InstruccionMostrar extends Instruccion {
 
+    /**
+     * Se obtiene y se muestra el valor de la variable que se pide 'mostrar'.
+     * @param variablel variable a la cual se quiere mostrar el valor. 
+     * @param variables tabla de variables, en donde se almacenaran temporalmente los datos.
+     * @return 
+     */
     @Override
-    public void ejecutar(HashMap tablaVariables, String variable1, String variable2, ArrayList variablesGuardadas) {
+    public void ejecutar(HashMap tablaVariables, String variable1,double valorVariable,double operando2, String variable2, ArrayList variablesGuardadas,String [] arregloTemporalInstrucciones) {
         JOptionPane.showMessageDialog(null,"El valor de " + variable1 + " es: " + tablaVariables.get(variable1));
     }
     
